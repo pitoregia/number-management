@@ -15,9 +15,11 @@ if (mysqli_num_rows($query) != 0) {
     $_SESSION['id'] = $row['id'];
     $_SESSION['role'] = $row['role'];
     if ($row['role'] == 'admin') {
-        header("Location: " . BASE_URL . "dashboard.php?page=admin");
+        // header("Location: " . BASE_URL . "dashboard.php?page=admin");
+        header("Location: " . BASE_URL . "number_list.php?error=admin");
     } else if ($row['role'] == 'user') {
-        header("Location: " . BASE_URL . "dashboard.php?page=user");
+        // header("Location: " . BASE_URL . "dashboard.php?page=user");
+        header("Location: " . BASE_URL . "number_list.php?error=user");
     }
 } else {
     header("Location: " . BASE_URL);
