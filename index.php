@@ -85,59 +85,7 @@ if (isset($_GET['q'])) {
 </head>
 
 <body>
-  <!-- <div class="container">
-    <h3 class="text-center">Simulation Page</h3>
 
-    <div class="row">
-      <div class="col-md-8 mx-auto">
-        <div class="card shadow">
-          <div class="card-header bg-secondary text-light">Input</div>
-          <div class="card-body">
-            <form action="" method="POST">
-              <div class="mb-3">
-                <label class="form-label">Phone Number</label>
-                <input type="text" name="number" value="<?= $phone_number ?>" class="form-control" />
-              </div>
-              <div class="mb-3">
-                <label class="form-label">Description</label>
-                <input type="text" name="description" value="<?= $description ?>" class="form-control" />
-              </div>
-              <div class="mb-3">
-                <label class="form-label">Status</label>
-                <select class="form-select" name="status">
-                  <option value="<?= $status ?>" selected hidden><?= $status ?></option>
-                  <option value="Hidup">Hidup</option>
-                  <option value="Tenggang">Tenggang</option>
-                  <option value="Mati">Mati</option>
-                </select>
-              </div>
-              <div class="row">
-                <div class="col">
-                  <div class="mb-3">
-                    <label class="form-label">Tanggal Masa Aktif</label>
-                    <input type="date" name="tanggal-aktif" value="<?= $tanggal_aktif ?>" class="form-control" />
-                  </div>
-                </div>
-                <div class="col">
-                  <div class="mb-3">
-                    <label class="form-label">Tanggal Masa Expired</label>
-                    <input type="date" name="tanggal-expired" value="<?= $tanggal_expired ?>" class="form-control" />
-                  </div>
-                </div>
-              </div>
-              <div class="text-center">
-                <hr />
-                <button class="btn w-100 btn-primary text-center" name="bsave" type="submit">
-                  Save
-                </button>
-              </div>
-            </form>
-          </div>
-          <div class="card-footer bg-secondary"></div>
-        </div>
-      </div>
-    </div>
-  </div> -->
 
 
   <div class="card col-8 mt-4 mx-auto shadow">
@@ -168,12 +116,13 @@ if (isset($_GET['q'])) {
       <div class="modal fade" id="addNumberModal" tabindex="-1" aria-labelledby="addNumberModalLabel" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
+
             <div class="modal-header">
               <h1 class="modal-title fs-5" id="addNumberModalLabel">Add new number</h1>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
-              <form action="" method="POST">
+            <form action="" method="POST">
+              <div class="modal-body">
                 <div class="mb-3">
                   <label class="form-label">Phone Number</label>
                   <input type="text" name="number" value="<?= $phone_number ?>" class="form-control" />
@@ -207,16 +156,15 @@ if (isset($_GET['q'])) {
                 </div>
                 <div class="text-center">
                   <hr />
-                  <button class="btn w-100 btn-primary text-center" name="bsave" type="submit">
-                    Save
-                  </button>
+
                 </div>
-              </form>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
+              </div>
+
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button class="btn btn-primary" name="bsave" type="submit">Save changes</button>
+              </div>
+            </form>
           </div>
         </div>
       </div>
@@ -250,7 +198,7 @@ if (isset($_GET['q'])) {
             <td><?= $row['tanggal_expired'] ?></td>
             <td><?= $row['deskripsi'] ?></td>
             <td>
-              <a href="index.php?q=edit&id=<?= $row['id'] ?>" name="bedit" class="btn btn-warning "><i class="fa-solid fa-pen-to-square"></i></a>
+              <a href="edit_number.php?q=edit&id=<?= $row['id'] ?>" name="bedit" class="btn btn-warning "><i class="fa-solid fa-pen-to-square"></i></a>
               <a href="index.php?q=delete&id=<?= $row['id'] ?>" name="bdelete" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this data?')"><i class="fa-solid fa-trash"></i></a>
             </td>
           </tr>
