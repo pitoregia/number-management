@@ -14,6 +14,7 @@ if (mysqli_num_rows($query) != 0) {
     session_start();
     $_SESSION['id'] = $row['id'];
     $_SESSION['role'] = $row['role'];
+    $_SESSION['name'] = $row['name'];
     if ($row['role'] == 'admin') {
         // header("Location: " . BASE_URL . "dashboard.php?page=admin");
         header("Location: " . BASE_URL . "number_list.php?error=admin");

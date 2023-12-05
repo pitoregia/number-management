@@ -2,7 +2,7 @@
 
 require_once 'function/dbconnect.php';
 require_once 'function/helper.php';
-session_start();
+// session_start();
 
 $page = isset($_GET['page']) ? $_GET['page'] : false;
 if ($_SESSION['id'] == null) {
@@ -79,16 +79,16 @@ if (isset($_GET['q'])) {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
     <script src="https://kit.fontawesome.com/fdb40b4321.js" crossorigin="anonymous"></script>
 </head>
-    
+
 <body>
 
     <div class="card col-8 mt-4 mx-auto shadow">
         <div class="card-header bg-secondary text-light">Data Phone Number</div>
-        <?php if (isset($_GET['error'])) { ?>
+        <!-- <?php if (isset($_GET['error'])) { ?>
             <div class="alert alert-danger col-8 mx-auto mt-2" role="alert">
                 <p>you are logged in as <?= $_GET['error'] ?></p>
             </div>
-        <?php } ?>
+        <?php } ?> -->
         <div class="card-body">
             <div class="container">
                 <div class="row justify-content-between">
@@ -210,15 +210,6 @@ if (isset($_GET['q'])) {
         <div class="card-footer bg-secondary"></div>
     </div>
 
-    <div class="card col-8 mt-4 mx-auto shadow" style="width: 18rem;">
-        <!-- <img src="img/admin-default.png" class="card-img-top" alt="admin image"> -->
-        <div class="card-body text-center">
-            <h5 class="card-title">
-                <?= $_SESSION['role'] ?>
-            </h5>
-            <a href="process/process_logout.php" class="btn btn-dark">Logout</a>
-        </div>
-    </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 </body>
 

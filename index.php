@@ -41,5 +41,5 @@ if (!isset($_SESSION['username']) && !isset($_SESSION['id'])) {   ?>
 
   </html>
 <?php } else {
-  header("Location: number_list.php");
+  header("Location: dashboard.php");
 } ?>
