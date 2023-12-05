@@ -82,8 +82,6 @@ if (isset($_GET['q'])) {
     
 <body>
 
-
-
     <div class="card col-8 mt-4 mx-auto shadow">
         <div class="card-header bg-secondary text-light">Data Phone Number</div>
         <?php if (isset($_GET['error'])) { ?>
