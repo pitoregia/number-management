@@ -30,7 +30,7 @@ if ($_SESSION['id'] == null) {
     <link href="assets/css/sb-admin-2.min.css" rel="stylesheet">
     <script src="https://kit.fontawesome.com/fdb40b4321.js" crossorigin="anonymous"></script>
 
-    <title>multi-user role-based-login-system</title>
+    <title>Dashboard | Number Management</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
 
 </head>
