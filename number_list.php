@@ -79,13 +79,18 @@ if (isset($_GET['q'])) {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
     <script src="https://kit.fontawesome.com/fdb40b4321.js" crossorigin="anonymous"></script>
 </head>
-
+    
 <body>
 
 
 
     <div class="card col-8 mt-4 mx-auto shadow">
         <div class="card-header bg-secondary text-light">Data Phone Number</div>
+        <?php if (isset($_GET['error'])) { ?>
+            <div class="alert alert-danger col-8 mx-auto mt-2" role="alert">
+                <p>you are logged in as <?= $_GET['error'] ?></p>
+            </div>
+        <?php } ?>
         <div class="card-body">
             <div class="container">
                 <div class="row justify-content-between">
@@ -113,11 +118,7 @@ if (isset($_GET['q'])) {
                 <div class="modal-dialog">
                     <div class="modal-content">
 
-                        <?php if (isset($_GET['error'])) { ?>
-                            <div class="alert alert-danger" role="alert">
-                                <?= $_GET['error'] ?>
-                            </div>
-                        <?php } ?>
+
 
                         <div class="modal-header">
                             <h1 class="modal-title fs-5" id="addNumberModalLabel">Add new number</h1>
