@@ -32,7 +32,7 @@
         </a>
         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <h6 class="collapse-header">User Management:</h6>
+                <h6 class="collapse-header">User Management</h6>
                 <a class="collapse-item" href="buttons.html">User Management</a>
                 <a class="collapse-item" href="cards.html">Admin Management</a>
             </div>
@@ -47,7 +47,7 @@
         </a>
         <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <h6 class="collapse-header">Number Management:</h6>
+                <h6 class="collapse-header">Number Management</h6>
                 <a class="collapse-item" href="page/number_list.php">Number List</a>
                 <a class="collapse-item" href="utilities-border.html">Admin Management</a>
             </div>
