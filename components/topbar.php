@@ -7,7 +7,7 @@
     </button>
 
     <!-- Topbar Search -->
-    <img src="assets/img/logo.png" alt="logo" class="sidebar-logo m-2 p-3" style="width: 10%; height: auto;">
+    <img src="assets/img/logo.png" alt="logo" class="sidebar-logo m-2 p-3" style="min-width: 100px; width: 10%; height: auto;">
 
     <!-- Topbar Navbar -->
     <ul class="navbar-nav ml-auto">
