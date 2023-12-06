@@ -53,7 +53,7 @@ if (!isset($_SESSION['username']) && !isset($_SESSION['id'])) {   ?>
       <div class="container center-card">
         <!-- Outer Row -->
         <div class="row justify-content-center">
-            <div class="col-xl-10 col-lg-10 col-md-9">
+            <div class="col-xl-12 col-lg-10 col-md-9">
                 <div class="card o-hidden border-0 shadow-lg my-5">
                     <div class="card-body p-0">
                         <!-- Nested Row within Card Body -->
@@ -61,7 +61,8 @@ if (!isset($_SESSION['username']) && !isset($_SESSION['id'])) {   ?>
                             <div class="col-lg-12">
                                 <div class="p-5">
                                     <div class="text-center">
-                                        <h1 class="h2 text-gray-900 mb-3"><b>Aplikasi Number Management</b></h1>
+                                    <img src="assets/img/logo.png" alt="logo" class="sidebar-logo m-2 p-3" style="min-width: 100px; width: 50%; height: auto;">
+                                        <h1 class="h3 text-gray-900 mb-3"><b>Aplikasi Number Management</b></h1>
                                         <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
                                     </div>
                                     <form class="user" method="POST" action="process/process_login.php">
