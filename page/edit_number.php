@@ -17,11 +17,11 @@ if (isset($_POST['bsave'])) {
         $query = mysqli_query($conn, "UPDATE tnumber SET nomor_telp = '$number', status = '$status', tanggal_aktif = '$tanggal_aktif', tanggal_expired = '$tanggal_expired', deskripsi = '$description' WHERE id = '$_GET[id]'");
         if ($query) {
             echo "<script>alert('Data berhasil diubah!');
-            document.location='index.php';
+            document.location='number_list.php';
             </script>";
         } else {
             echo "<script>alert('Data gagal diubah!')
-            document.location='index.php';
+            document.location='number_list.php';
             </script>";
         }
     } else {
@@ -30,11 +30,11 @@ if (isset($_POST['bsave'])) {
 
         if ($query) {
             echo "<script>alert('Data berhasil disimpan!');
-          document.location='index.php';
+          document.location='number_list.php';
           </script>";
         } else {
             echo "<script>alert('Data gagal disimpan!')
-          document.location='index.php';
+          document.location='number_list.php';
           </script>";
         }
     }

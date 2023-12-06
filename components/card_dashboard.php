@@ -4,7 +4,7 @@
 
 <div class="row">
     <!-- WhatsApp ON Card -->
-    <div class="col-12 col-md-4 mb-4">
+    <div class="col-12 col-md-6 col-lg-4 col-xl-3 mb-4">
         <div class="card border-left-success shadow h-100 py-2">
             <div class="card-body text-center">
                 <div class="row no-gutters align-items-center justify-content-center">
@@ -25,7 +25,7 @@
     </div>
 
     <!-- User Card -->
-    <div class="col-12 col-md-4 mb-4">
+    <div class="col-12 col-md-6 col-lg-4 col-xl-3 mb-4">
         <div class="card border-left-primary shadow h-100 py-2">
             <div class="card-body text-center">
                 <div class="row no-gutters align-items-center justify-content-center">
@@ -45,7 +45,27 @@
         </div>
     </div>
 
-    <div class="col-12 col-md-4 mb-4">
+    <div class="col-12 col-md-6 col-lg-4 col-xl-3 mb-4">
+        <div class="card border-left-danger shadow h-100 py-2">
+            <div class="card-body text-center">
+                <div class="row no-gutters align-items-center justify-content-center">
+                    <div class="col">
+                        <div class="text-xl font-weight-bold text-danger text-uppercase mb-1">
+                            Tenggang
+                        </div>
+                        <div class="h4 mb-0 font-weight-bold text-gray-800">
+                            <?php echo $active_date; ?>
+                        </div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-triangle-exclamation fa-4x text-gray-300"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12 col-md-6 col-lg-4 col-xl-3 mb-4">
         <div class="card border-left-danger shadow h-100 py-2">
             <div class="card-body text-center">
                 <div class="row no-gutters align-items-center justify-content-center">
