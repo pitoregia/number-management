@@ -1,14 +1,14 @@
 <?php
 
-require_once 'function/dbconnect.php';
-require_once 'function/helper.php';
+require_once '../function/dbconnect.php';
+require_once '../function/helper.php';
 // session_start();
 
-$page = isset($_GET['page']) ? $_GET['page'] : false;
-if ($_SESSION['id'] == null) {
-    header("Location: " . BASE_URL);
-    exit();
-}
+// $page = isset($_GET['page']) ? $_GET['page'] : false;
+// if ($_SESSION['id'] == null) {
+//     header("Location: " . BASE_URL);
+//     exit();
+// }
 
 if (isset($_POST['bsave'])) {
     $number = $_POST['number'];
@@ -35,12 +35,12 @@ if (isset($_POST['bsave'])) {
 
         if ($query) {
             echo "<script>alert('Data berhasil disimpan!');
-          document.location='number_list.php';
-          </script>";
+                document.location='number_list.php';
+                </script>";
         } else {
             echo "<script>alert('Data gagal disimpan!')
-          document.location='number_list.php';
-          </script>";
+                document.location='number_list.php';
+                </script>";
         }
     }
 }
@@ -126,15 +126,15 @@ if (isset($_GET['q'])) {
                             <div class="modal-body">
                                 <div class="mb-3">
                                     <label class="form-label">Phone Number</label>
-                                    <input type="text" name="number" value="<?= $phone_number ?>" class="form-control" />
+                                    <input type="text" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 48 && event.charCode <= 57))" name="number" value="<?= $phone_number ?>" class="form-control" required />
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label">Description</label>
-                                    <input type="text" name="description" value="<?= $description ?>" class="form-control" />
+                                    <input type="text" name="description" value="<?= $description ?>" class="form-control" required />
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label">Status</label>
-                                    <select class="form-select" name="status">
+                                    <select class="form-select" name="status" required>
                                         <option value="<?= $status ?>" selected hidden><?= $status ?></option>
                                         <option value="Hidup">Hidup</option>
                                         <option value="Tenggang">Tenggang</option>
@@ -145,13 +145,13 @@ if (isset($_GET['q'])) {
                                     <div class="col">
                                         <div class="mb-3">
                                             <label class="form-label">Tanggal Masa Aktif</label>
-                                            <input type="date" name="tanggal-aktif" value="<?= $tanggal_aktif ?>" class="form-control" />
+                                            <input type="date" name="tanggal-aktif" value="<?= $tanggal_aktif ?>" class="form-control" required />
                                         </div>
                                     </div>
                                     <div class="col">
                                         <div class="mb-3">
                                             <label class="form-label">Tanggal Masa Expired</label>
-                                            <input type="date" name="tanggal-expired" value="<?= $tanggal_expired ?>" class="form-control" />
+                                            <input type="date" name="tanggal-expired" value="<?= $tanggal_expired ?>" class="form-control" required />
                                         </div>
                                     </div>
                                 </div>

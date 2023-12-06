@@ -1,6 +1,6 @@
 <?php
-require_once 'function/dbconnect.php';
-require_once 'function/helper.php';
+require_once '../function/dbconnect.php';
+require_once '../function/helper.php';
 
 
 if (isset($_POST['bsave'])) {
