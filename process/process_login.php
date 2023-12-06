@@ -23,5 +23,5 @@ if (mysqli_num_rows($query) != 0) {
         header("Location: " . BASE_URL . "index.php?page=user");
     }
 } else {
-    header("Location: " . BASE_URL);
+    header("Location: " . BASE_URL . "index.php?error=failed");
 }
