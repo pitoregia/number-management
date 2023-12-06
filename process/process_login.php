@@ -17,10 +17,10 @@ if (mysqli_num_rows($query) != 0) {
     $_SESSION['name'] = $row['name'];
     if ($row['role'] == 'admin') {
         // header("Location: " . BASE_URL . "dashboard.php?page=admin");
-        header("Location: " . BASE_URL . "number_list.php?page=admin");
+        header("Location: " . BASE_URL . "index.php?page=admin");
     } else if ($row['role'] == 'user') {
         // header("Location: " . BASE_URL . "dashboard.php?page=user");
-        header("Location: " . BASE_URL . "number_list.php?page=user");
+        header("Location: " . BASE_URL . "index.php?page=user");
     }
 } else {
     header("Location: " . BASE_URL);
