@@ -1,3 +1,5 @@
+<?php require_once(__DIR__ . '/../function/user_count.php');?>
+
 <div class="row">
     <!-- WhatsApp ON Card -->
     <div class="col-12 col-md-4 mb-4">
@@ -46,7 +48,9 @@
                         <div class="text-xl font-weight-bold text-primary text-uppercase mb-1">
                             User
                         </div>
-                        <div class="h4 mb-0 font-weight-bold text-gray-800">18</div>
+                        <div class="h4 mb-0 font-weight-bold text-gray-800">
+                        <?php echo $user_count; ?>
+                        </div>
                     </div>
                     <div class="col-auto">
                         <i class="fas fa-user fa-4x text-gray-300"></i>
