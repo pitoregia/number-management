@@ -35,14 +35,25 @@ if ($_SESSION['id'] == null) {
 
 </head>
 
-<body id="page-top d-flex flex-column min-vh-100">
-    <?php
-    include('components/sidebar.php');
-    include('number_list.php');
-    include('components/footer.php');
-    ?>
+<body id="page-top">
+    <div id="wrapper">
+        <!-- Sidebar -->
+        <?php include('components/sidebar.php'); ?>
+        
+        <!-- Page Content -->
+        <div id="content-wrapper" class="d-flex flex-column">
+            <?php include('components/topbar.php'); ?>
+            <div id="content">
+                <div class="container">
+                    <!-- Dashboard Cards -->
+                    <?php include('components/card_dashboard.php'); ?>
+                </div>
+            </div>
+            <!-- Footer -->
+            <?php include('components/footer.php'); ?>
+        </div>
+    </div>
 </body>
-
 
 <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script> -->
 <!-- End of Topbar -->
