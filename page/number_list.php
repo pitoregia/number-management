@@ -87,8 +87,9 @@ if (isset($_GET['q'])) {
             <?php include('../components/topbar.php'); ?>
             <div id="content">
                 <div class="container">
-                    <div class="card col-8 mt-4 mx-auto shadow">
-                        <div class="card-header bg-secondary text-light">Data Phone Number</div>
+                    <div class="card col-12 mt-4 mx-auto shadow">
+                        <!-- <div class="card-header bg-secondary text-light">Data Phone Number</div> -->
+                        <div class=""></div>
                         <div class="card-body">
                             <div class="container">
                                 <div class="row justify-content-between">
@@ -167,44 +168,48 @@ if (isset($_GET['q'])) {
                                 </div>
                             </div>
 
-                            <table class="table table-striped table-hover table-bordered">
-                                <tr>
-                                    <th>No.</th>
-                                    <th>Nomor</th>
-                                    <th>Status</th>
-                                    <th>Tanggal Masa Aktif</th>
-                                    <th>Tanggal Masa Expired</th>
-                                    <th>Deskripsi</th>
-                                    <th>Action</th>
-                                </tr>
-                                <?php
-                                $no = 1;
-
-                                if (isset($_POST['bsearch'])) {
-                                    $search = $_POST['tsearch'];
-                                    $query = mysqli_query($conn, "SELECT * FROM tnumber WHERE nomor_telp LIKE '%$search%' or status LIKE '%$search%' or tanggal_aktif LIKE '%$search%' or tanggal_expired LIKE '%$search%' or deskripsi LIKE '%$search%'");
-                                } else
-                                    $query = mysqli_query($conn, "SELECT * FROM tnumber order by id asc");
-
-                                while ($row = mysqli_fetch_array($query)) {
-                                ?>
-                                    <tr>
-                                        <td><?= $no++ ?></td>
-                                        <td><?= $row['nomor_telp'] ?></td>
-                                        <td><?= $row['status'] ?></td>
-                                        <td><?= $row['tanggal_aktif'] ?></td>
-                                        <td><?= $row['tanggal_expired'] ?></td>
-                                        <td><?= $row['deskripsi'] ?></td>
-                                        <td>
-                                            <a href="edit_number.php?q=edit&id=<?= $row['id'] ?>" name="bedit" class="btn btn-warning "><i class="fa-solid fa-pen-to-square"></i></a>
-                                            <a href="number_list.php?q=delete&id=<?= $row['id'] ?>" name="bdelete" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this data?')"><i class="fa-solid fa-trash"></i></a>
-                                        </td>
-                                    </tr>
-
-                                <?php } ?>
-                            </table>
+                            <div class="table-wrap">
+                                <table class="table text-align-center table-responsive-xl ">
+                                    <!-- <table class="table table-responsive-xl table-striped table-hover table-bordered"> -->
+                                    <thead>
+                                        <tr>
+                                            <th>No.</th>
+                                            <th>Nomor</th>
+                                            <th>Status</th>
+                                            <th>Tanggal Masa Aktif</th>
+                                            <th>Tanggal Masa Expired</th>
+                                            <th>Deskripsi</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php
+                                        $no = 1;
+                                        if (isset($_POST['bsearch'])) {
+                                            $search = $_POST['tsearch'];
+                                            $query = mysqli_query($conn, "SELECT * FROM tnumber WHERE nomor_telp LIKE '%$search%' or status LIKE '%$search%' or tanggal_aktif LIKE '%$search%' or tanggal_expired LIKE '%$search%' or deskripsi LIKE '%$search%'");
+                                        } else
+                                            $query = mysqli_query($conn, "SELECT * FROM tnumber order by id asc");
+                                        while ($row = mysqli_fetch_array($query)) {
+                                        ?>
+                                            <tr>
+                                                <td><?= $no++ ?></td>
+                                                <td><?= $row['nomor_telp'] ?></td>
+                                                <td><?= $row['status'] ?></td>
+                                                <td><?= $row['tanggal_aktif'] ?></td>
+                                                <td><?= $row['tanggal_expired'] ?></td>
+                                                <td><?= $row['deskripsi'] ?></td>
+                                                <td>
+                                                    <a href="edit_number.php?q=edit&id=<?= $row['id'] ?>" name="bedit" class="btn btn-warning "><i class="fa-solid fa-pen-to-square"></i></a>
+                                                    <a href="number_list.php?q=delete&id=<?= $row['id'] ?>" name="bdelete" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this data?')"><i class="fa-solid fa-trash"></i></a>
+                                                </td>
+                                            </tr>
+                                        <?php } ?>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
-                        <div class="card-footer bg-secondary"></div>
+                        <!-- <div class="card-footer"></div> -->
                     </div>
                 </div>
             </div>
