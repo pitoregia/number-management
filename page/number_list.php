@@ -2,7 +2,7 @@
 
 require_once '../function/dbconnect.php';
 require_once '../function/helper.php';
-// session_start();
+session_start();
 
 // $page = isset($_GET['page']) ? $_GET['page'] : false;
 // if ($_SESSION['id'] == null) {
@@ -17,33 +17,20 @@ if (isset($_POST['bsave'])) {
     $tanggal_aktif = $_POST['tanggal-aktif'];
     $tanggal_expired = $_POST['tanggal-expired'];
 
-    // edit
-    if (isset($_GET['q']) == 'edit') {
-        $query = mysqli_query($conn, "UPDATE tnumber SET nomor_telp = '$number', status = '$status', tanggal_aktif = '$tanggal_aktif', tanggal_expired = '$tanggal_expired', deskripsi = '$description' WHERE id = '$_GET[id]'");
-        if ($query) {
-            echo "<script>alert('Data berhasil diubah!');
-            document.location='number_list.php';
-            </script>";
-        } else {
-            echo "<script>alert('Data gagal diubah!')
-            document.location='number_list.php';
-            </script>";
-        }
-    } else {
-        // save
-        $query = mysqli_query($conn, "INSERT INTO tnumber (nomor_telp, status, tanggal_aktif, tanggal_expired, deskripsi) VALUES ('$number', '$status', '$tanggal_aktif', '$tanggal_expired', '$description')");
+    // save
+    $query = mysqli_query($conn, "INSERT INTO tnumber (nomor_telp, status, tanggal_aktif, tanggal_expired, deskripsi) VALUES ('$number', '$status', '$tanggal_aktif', '$tanggal_expired', '$description')");
 
-        if ($query) {
-            echo "<script>alert('Data berhasil disimpan!');
+    if ($query) {
+        echo "<script>alert('Data berhasil disimpan!');
                 document.location='number_list.php';
                 </script>";
-        } else {
-            echo "<script>alert('Data gagal disimpan!')
+    } else {
+        echo "<script>alert('Data gagal disimpan!')
                 document.location='number_list.php';
                 </script>";
-        }
     }
 }
+
 
 $phone_number = '';
 $description = '';
@@ -73,144 +60,184 @@ if (isset($_GET['q'])) {
 <html lang="en">
 
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Number Management</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+    <link href="../assets/css/sb-admin-2.min.css" rel="stylesheet">
     <script src="https://kit.fontawesome.com/fdb40b4321.js" crossorigin="anonymous"></script>
+
+    <title>Dashboard | List</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+
 </head>
 
-<body>
+<body id="page-top">
+    <div id="wrapper">
+        <!-- Sidebar -->
+        <?php include('../components/sidebar.php'); ?>
 
-    <div class="card col-8 mt-4 mx-auto shadow">
-        <div class="card-header bg-secondary text-light">Data Phone Number</div>
-        <!-- <?php if (isset($_GET['error'])) { ?>
+        <!-- Page Content -->
+        <div id="content-wrapper" class="d-flex flex-column">
+            <?php include('../components/topbar.php'); ?>
+            <div id="content">
+                <div class="container">
+                    <div class="card col-8 mt-4 mx-auto shadow">
+                        <div class="card-header bg-secondary text-light">Data Phone Number</div>
+                        <!-- <?php if (isset($_GET['error'])) { ?>
             <div class="alert alert-danger col-8 mx-auto mt-2" role="alert">
                 <p>you are logged in as <?= $_GET['error'] ?></p>
             </div>
         <?php } ?> -->
-        <div class="card-body">
-            <div class="container">
-                <div class="row justify-content-between">
-                    <div class="col">
-                        <form method="POST">
-                            <div class="input-group mb-3">
-                                <input type="text" name="tsearch" class="form-control" placeholder="Search" />
-                                <button class="btn btn-primary" name="bsearch" type="submit">
-                                    <i class="fa-solid fa-magnifying-glass"></i>
-                                </button>
+                        <div class="card-body">
+                            <div class="container">
+                                <div class="row justify-content-between">
+                                    <div class="col">
+                                        <form method="POST">
+                                            <div class="input-group mb-3">
+                                                <input type="text" name="tsearch" class="form-control" placeholder="Search" />
+                                                <button class="btn btn-primary" name="bsearch" type="submit">
+                                                    <i class="fa-solid fa-magnifying-glass"></i>
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="col-auto">
+                                        <button type=" button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addNumberModal">
+                                            <i class="fa-solid fa-plus"></i>
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
-                        </form>
-                    </div>
-                    <div class="col-auto">
-                        <button type=" button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addNumberModal">
-                            <i class="fa-solid fa-plus"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
 
+                            <!-- Modal -->
+                            <div class="modal fade" id="addNumberModal" tabindex="-1" aria-labelledby="addNumberModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
 
-            <!-- Modal -->
-            <div class="modal fade" id="addNumberModal" tabindex="-1" aria-labelledby="addNumberModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h1 class="modal-title fs-5" id="addNumberModalLabel">Add new number</h1>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <form action="" method="POST">
+                                            <div class="modal-body">
+                                                <div class="mb-3">
+                                                    <label class="form-label">Phone Number</label>
+                                                    <input type="text" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 48 && event.charCode <= 57))" name="number" value="<?= $phone_number ?>" class="form-control" required />
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label class="form-label">Description</label>
+                                                    <input type="text" name="description" value="<?= $description ?>" class="form-control" required />
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label class="form-label">Status</label>
+                                                    <select class="form-select" name="status" required>
+                                                        <option value="<?= $status ?>" selected hidden><?= $status ?></option>
+                                                        <option value="Hidup">Hidup</option>
+                                                        <option value="Tenggang">Tenggang</option>
+                                                        <option value="Mati">Mati</option>
+                                                    </select>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <div class="mb-3">
+                                                            <label class="form-label">Tanggal Masa Aktif</label>
+                                                            <input type="date" name="tanggal-aktif" value="<?= $tanggal_aktif ?>" class="form-control" required />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col">
+                                                        <div class="mb-3">
+                                                            <label class="form-label">Tanggal Masa Expired</label>
+                                                            <input type="date" name="tanggal-expired" value="<?= $tanggal_expired ?>" class="form-control" required />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="text-center">
+                                                    <hr />
 
+                                                </div>
+                                            </div>
 
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                <button class="btn btn-primary" name="bsave" type="submit">Save changes</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
 
-                        <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="addNumberModalLabel">Add new number</h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            <table class="table table-striped table-hover table-bordered">
+                                <tr>
+                                    <th>No.</th>
+                                    <th>Nomor</th>
+                                    <th>Status</th>
+                                    <th>Tanggal Masa Aktif</th>
+                                    <th>Tanggal Masa Expired</th>
+                                    <th>Deskripsi</th>
+                                    <th>Action</th>
+                                </tr>
+                                <?php
+                                $no = 1;
+
+                                if (isset($_POST['bsearch'])) {
+                                    $search = $_POST['tsearch'];
+                                    $query = mysqli_query($conn, "SELECT * FROM tnumber WHERE nomor_telp LIKE '%$search%' or status LIKE '%$search%' or tanggal_aktif LIKE '%$search%' or tanggal_expired LIKE '%$search%' or deskripsi LIKE '%$search%'");
+                                } else
+                                    $query = mysqli_query($conn, "SELECT * FROM tnumber order by id asc");
+
+                                while ($row = mysqli_fetch_array($query)) {
+                                ?>
+                                    <tr>
+                                        <td><?= $no++ ?></td>
+                                        <td><?= $row['nomor_telp'] ?></td>
+                                        <td><?= $row['status'] ?></td>
+                                        <td><?= $row['tanggal_aktif'] ?></td>
+                                        <td><?= $row['tanggal_expired'] ?></td>
+                                        <td><?= $row['deskripsi'] ?></td>
+                                        <td>
+                                            <a href="edit_number.php?q=edit&id=<?= $row['id'] ?>" name="bedit" class="btn btn-warning "><i class="fa-solid fa-pen-to-square"></i></a>
+                                            <a href="number_list.php?q=delete&id=<?= $row['id'] ?>" name="bdelete" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this data?')"><i class="fa-solid fa-trash"></i></a>
+                                        </td>
+                                    </tr>
+
+                                <?php } ?>
+                            </table>
                         </div>
-                        <form action="" method="POST">
-                            <div class="modal-body">
-                                <div class="mb-3">
-                                    <label class="form-label">Phone Number</label>
-                                    <input type="text" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 48 && event.charCode <= 57))" name="number" value="<?= $phone_number ?>" class="form-control" required />
-                                </div>
-                                <div class="mb-3">
-                                    <label class="form-label">Description</label>
-                                    <input type="text" name="description" value="<?= $description ?>" class="form-control" required />
-                                </div>
-                                <div class="mb-3">
-                                    <label class="form-label">Status</label>
-                                    <select class="form-select" name="status" required>
-                                        <option value="<?= $status ?>" selected hidden><?= $status ?></option>
-                                        <option value="Hidup">Hidup</option>
-                                        <option value="Tenggang">Tenggang</option>
-                                        <option value="Mati">Mati</option>
-                                    </select>
-                                </div>
-                                <div class="row">
-                                    <div class="col">
-                                        <div class="mb-3">
-                                            <label class="form-label">Tanggal Masa Aktif</label>
-                                            <input type="date" name="tanggal-aktif" value="<?= $tanggal_aktif ?>" class="form-control" required />
-                                        </div>
-                                    </div>
-                                    <div class="col">
-                                        <div class="mb-3">
-                                            <label class="form-label">Tanggal Masa Expired</label>
-                                            <input type="date" name="tanggal-expired" value="<?= $tanggal_expired ?>" class="form-control" required />
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="text-center">
-                                    <hr />
-
-                                </div>
-                            </div>
-
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button class="btn btn-primary" name="bsave" type="submit">Save changes</button>
-                            </div>
-                        </form>
+                        <div class="card-footer bg-secondary"></div>
                     </div>
                 </div>
             </div>
-
-            <table class="table table-striped table-hover table-bordered">
-                <tr>
-                    <th>No.</th>
-                    <th>Nomor</th>
-                    <th>Status</th>
-                    <th>Tanggal Masa Aktif</th>
-                    <th>Tanggal Masa Expired</th>
-                    <th>Deskripsi</th>
-                    <th>Action</th>
-                </tr>
-                <?php
-                $no = 1;
-
-                if (isset($_POST['bsearch'])) {
-                    $search = $_POST['tsearch'];
-                    $query = mysqli_query($conn, "SELECT * FROM tnumber WHERE nomor_telp LIKE '%$search%' or status LIKE '%$search%' or tanggal_aktif LIKE '%$search%' or tanggal_expired LIKE '%$search%' or deskripsi LIKE '%$search%'");
-                } else
-                    $query = mysqli_query($conn, "SELECT * FROM tnumber order by id asc");
-
-                while ($row = mysqli_fetch_array($query)) {
-                ?>
-                    <tr>
-                        <td><?= $no++ ?></td>
-                        <td><?= $row['nomor_telp'] ?></td>
-                        <td><?= $row['status'] ?></td>
-                        <td><?= $row['tanggal_aktif'] ?></td>
-                        <td><?= $row['tanggal_expired'] ?></td>
-                        <td><?= $row['deskripsi'] ?></td>
-                        <td>
-                            <a href="edit_number.php?q=edit&id=<?= $row['id'] ?>" name="bedit" class="btn btn-warning "><i class="fa-solid fa-pen-to-square"></i></a>
-                            <a href="number_list.php?q=delete&id=<?= $row['id'] ?>" name="bdelete" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this data?')"><i class="fa-solid fa-trash"></i></a>
-                        </td>
-                    </tr>
-
-                <?php } ?>
-            </table>
+            <!-- Footer -->
+            <?php include('../components/footer.php'); ?>
         </div>
-        <div class="card-footer bg-secondary"></div>
     </div>
 
+
+
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <!-- Bootstrap core JavaScript-->
+    <script src="../vendor/jquery/jquery.min.js"></script>
+    <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="../vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="../assets/js/sb-admin-2.min.js"></script>
+
+    <!-- Page level plugins -->
+    <script src="../vendor/chart.js/Chart.min.js"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="../assets/js/demo/chart-area-demo.js"></script>
+    <script src="../assets/js/demo/chart-pie-demo.js"></script>
 </body>
 
 </html>

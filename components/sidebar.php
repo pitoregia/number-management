@@ -2,10 +2,12 @@
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
     <!-- Sidebar - Brand -->
-    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="<?php BASE_URL ?>">
+    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="<?php echo BASE_URL ?>">
+
         <div class=" sidebar-brand-icon">
         </div>
         <div class="sidebar-brand-text mx-3">Dashboard</div>
+
     </a>
 
     <!-- Divider -->
@@ -13,7 +15,6 @@
 
     <!-- Nav Item - Dashboard -->
     <li class="nav-item active">
-
     </li>
 
     <!-- Divider -->
