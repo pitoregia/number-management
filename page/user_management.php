@@ -167,18 +167,18 @@ if (isset($_GET['q_user'])) {
 
                                         $statusClass = '';
                                         switch ($row['role']) {
-                                            case 'admin':
+                                            case 'ADMIN':
                                                 // $statusClass = 'bg-warning';
                                                 $statusClass = 'btn-warning';
                                                 break;
-                                            case 'aser':
-                                                $statusClass = 'btn-danger';
+                                            case 'USER':
+                                                $statusClass = 'btn-success';
                                                 break;
                                                 // Add more cases for other statuses if needed
 
                                                 // Default case if none of the above conditions match
                                             default:
-                                                $statusClass = 'btn-success';
+                                                $statusClass = 'btn-danger';
                                                 break;
                                         }
                                     ?>
@@ -191,8 +191,8 @@ if (isset($_GET['q_user'])) {
                                                     <?= $row['role'] ?>
                                                 </button>
                                                 <ul class="dropdown-menu">
-                                                    <li><a class="dropdown-item role-item" href="#">admin</a></li>
-                                                    <li><a class="dropdown-item role-item" href="#">user</a></li>
+                                                    <li><a class="dropdown-item role-item" href="#">ADMIN</a></li>
+                                                    <li><a class="dropdown-item role-item" href="#">USER</a></li>
                                                 </ul>
                                             </td>
                                             <td><?= $row['name'] ?></td>
