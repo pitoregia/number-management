@@ -63,7 +63,7 @@
                     <div class="widget-box-2">
                         <div class="widget-detail-2 d-flex align-items-center">
                             <h5 class="text-muted font-weight-normal mr-auto">Total User</h5>
-                            <h2 id="all_users" class="font-weight-normal text-success"><?php echo $user_count; ?></h2>
+                            <h2 id="all_users" class="font-weight-normal text-success"><?php echo $total_count; ?></h2>
                         </div>
                     </div>
                     <hr class="my-1 border-top">
@@ -73,7 +73,7 @@
                                 <div class="avatar-sm bg-soft-success">
                                     <i class= "fa-solid fa-user fa-2x avatar-title text-success"></i>
                                 </div>
-                                <h3 id="active_users" class="ml-auto font-weight-normal">0</h3>
+                                <h3 id="active_users" class="ml-auto font-weight-normal"><?php echo $user_count; ?></h3>
                             </div>
                             <h5 class="text-muted font-weight-normal text-right my-0">Users</h5>
                         </div>
@@ -82,7 +82,7 @@
                                 <div class="avatar-sm bg-soft-warning">
                                     <i class="fa-solid fa-screwdriver-wrench fa-2x avatar-title text-warning"></i>
                                 </div>
-                                <h3 id="admin_users" class="ml-auto font-weight-normal">0</h3>
+                                <h3 id="admin_users" class="ml-auto font-weight-normal"><?php echo $admin_count; ?></h3>
                             </div>
                             <h5 class="text-muted font-weight-normal text-right my-0">Admin</h5>
                         </div>
