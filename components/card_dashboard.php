@@ -25,7 +25,7 @@
                         <div class="avatar-sm bg-soft-secondary">
                             <i class="fas fa-check fa-2x avatar-title text-success"></i>
                         </div>
-                        <h3 id="active_nomor" class="ml-auto font-weight-normal">0</h3>
+                        <h3 id="active_nomor" class="ml-auto font-weight-normal"><?php echo $active_number; ?></h3>
                     </div>
                     <h5 class="text-muted font-weight-normal text-right my-0">Active</h5>
                 </div>
@@ -43,7 +43,7 @@
                         <div class="avatar-sm bg-soft-info">
                             <i class="fa-solid fa-triangle-exclamation fa-2x avatar-title text-warning "></i>
                         </div>
-                        <h3 id="tenggang_nomor" class="ml-auto font-weight-normal"><?php echo $active_date; ?></h3>
+                        <h3 id="tenggang_nomor" class="ml-auto font-weight-normal"><?php echo $grace_period_number; ?></h3>
                     </div>
                     <h5 class="text-muted font-weight-normal text-right my-0">Tenggang</h5>
                 </div>

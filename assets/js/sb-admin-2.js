@@ -5,9 +5,13 @@
   $("#sidebarToggle, #sidebarToggleTop").on('click', function(e) {
     $("body").toggleClass("sidebar-toggled");
     $(".sidebar").toggleClass("toggled");
-    if ($(".sidebar").hasClass("toggled")) {
-      $('.sidebar .collapse').collapse('hide');
-    };
+    setTimeout(function() {
+      if ($(".sidebar").hasClass("toggled")) {
+        $("#brandIcon").show(); // Show the brand icon
+      } else {
+        $("#brandIcon").hide(); // Hide the brand icon
+      }
+    }, 250); // Adjust this delay to match the transition duration in your CSS
   });
 
   // Close any open menu accordions when window is resized below 768px
@@ -21,6 +25,11 @@
       $("body").addClass("sidebar-toggled");
       $(".sidebar").addClass("toggled");
       $('.sidebar .collapse').collapse('hide');
+      $("#brandIcon").show(); // Show the brand icon
+    } else if ($(window).width() >= 480 && $(".sidebar").hasClass("toggled")) {
+      $("body").removeClass("sidebar-toggled");
+      $(".sidebar").removeClass("toggled");
+      $("#brandIcon").hide(); // Hide the brand icon
     };
   });
 

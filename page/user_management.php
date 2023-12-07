@@ -7,10 +7,11 @@ if (isset($_POST['bsave'])) {
     $username = $_POST['username'];
     $role = $_POST['role'];
     $name = $_POST['name'];
+    $password = md5($_POST['password']); // MD5 hashing the password
 
     // edit
     if (isset($_GET['q']) == 'edit') {
-        $query = mysqli_query($conn, "UPDATE user SET username = '$username', role = '$role', name = '$name' WHERE id = '$_GET[id]'");
+        $query = mysqli_query($conn, "UPDATE user SET username = '$username', role = '$role', name = '$name', password = '$password' WHERE id = '$_GET[id]'");
         if ($query) {
             echo "<script>alert('Data berhasil diubah!');
             document.location='user_management.php';
@@ -22,7 +23,7 @@ if (isset($_POST['bsave'])) {
         }
     } else {
         // save
-        $query = mysqli_query($conn, "INSERT INTO user (username, role, name) VALUES ('$username', '$role', '$name')");
+        $query = mysqli_query($conn, "INSERT INTO user (username, role, name, password) VALUES ('$username', '$role', '$name', '$password')");
 
         if ($query) {
             echo "<script>alert('Data berhasil disimpan!');
@@ -39,6 +40,7 @@ if (isset($_POST['bsave'])) {
 $username = '';
 $role = '';
 $name = '';
+$password = ''; // Initialize password field
 
 if (isset($_GET['q'])) {
     if ($_GET['q'] == 'delete') {
@@ -125,6 +127,10 @@ if (isset($_GET['q'])) {
                                 <div class="mb-3">
                                     <label class="form-label">Name</label>
                                     <input type="text" name="name" value="<?= $name ?>" class="form-control" required />
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Password</label>
+                                    <input type="password" name="password" class="form-control" required />
                                 </div>
                             </div>
                             <div class="modal-footer">
