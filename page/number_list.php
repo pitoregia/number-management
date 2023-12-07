@@ -227,16 +227,15 @@ if (isset($_GET['q'])) {
                                             <tr>
                                                 <td><?= $no++ ?></td>
                                                 <td><?= $row['nomor_telp'] ?></td>
-                                                <!-- <td><span class="badge rounded-pill <?= $statusClass ?>"><?= $row['status'] ?></span></td> -->
                                                 <td class="row-id" style="display: none;"><?= $row['id'] ?></td> <!-- Hidden row ID -->
                                                 <td>
                                                     <button type="button" class="btn <?= $statusClass ?> dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                                                         <?= $row['status'] ?>
                                                     </button>
                                                     <ul class="dropdown-menu">
-                                                        <li><a class="dropdown-item" href="#">HIDUP</a></li>
-                                                        <li><a class="dropdown-item" href="#">TENGGANG</a></li>
-                                                        <li><a class="dropdown-item" href="#">MATI</a></li>
+                                                        <li><a class="dropdown-item status-item" href="#">HIDUP</a></li>
+                                                        <li><a class="dropdown-item status-item" href="#">TENGGANG</a></li>
+                                                        <li><a class="dropdown-item status-item" href="#">MATI</a></li>
                                                     </ul>
                                                 </td>
                                                 <td><?= $row['tanggal_aktif'] ?></td>

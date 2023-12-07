@@ -191,8 +191,8 @@ if (isset($_GET['q_user'])) {
                                                     <?= $row['role'] ?>
                                                 </button>
                                                 <ul class="dropdown-menu">
-                                                    <li><a class="dropdown-item" href="#">Admin</a></li>
-                                                    <li><a class="dropdown-item" href="#">User</a></li>
+                                                    <li><a class="dropdown-item role-item" href="#">admin</a></li>
+                                                    <li><a class="dropdown-item role-item" href="#">user</a></li>
                                                 </ul>
                                             </td>
                                             <td><?= $row['name'] ?></td>
