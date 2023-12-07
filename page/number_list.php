@@ -42,9 +42,10 @@ if (isset($_GET['q'])) {
     if ($_GET['q'] == 'delete') {
         $query = mysqli_query($conn, "DELETE FROM tnumber WHERE id = '$_GET[id]'");
         if ($query) {
-            echo "<script>alert('Data berhasil dihapus!');
-            document.location='number_list.php';
-            </script>";
+            // echo "<script>alert('Data berhasil dihapus!');
+            // document.location='number_list.php';
+            // // </script>";
+            header("Location: " . BASE_URL . "page/number_list.php");
         } else {
             echo "<script>alert('Data gagal dihapus!')
             document.location='number_list.php';
@@ -89,7 +90,6 @@ if (isset($_GET['q'])) {
                 <div class="container">
                     <div class="card col-12 mt-4 mx-auto shadow">
                         <!-- <div class="card-header bg-secondary text-light">Data Phone Number</div> -->
-                        <div class=""></div>
                         <div class="card-body">
                             <div class="container">
                                 <div class="row justify-content-between">
@@ -132,12 +132,24 @@ if (isset($_GET['q'])) {
                                                 </div>
                                                 <div class="mb-3">
                                                     <label class="form-label">Status</label>
-                                                    <select class="form-select" name="status" required>
+                                                    <br>
+                                                    <div class="btn-group">
+                                                        <button type="button" class="btn btn-danger dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                                            Select
+                                                        </button>
+                                                        <ul class="dropdown-menu">
+                                                            <li><a class="dropdown-item" href="#">Hidup</a></li>
+                                                            <li><a class="dropdown-item" href="#">Tenggang</a></li>
+                                                            <li><a class="dropdown-item" href="#">Mati</a></li>
+                                                        </ul>
+                                                    </div>
+                                                    <!-- <select class="form-select" name="status" required>
                                                         <option value="<?= $status ?>" selected hidden><?= $status ?></option>
-                                                        <option value="Hidup">Hidup</option>
-                                                        <option value="Tenggang">Tenggang</option>
-                                                        <option value="Mati">Mati</option>
-                                                    </select>
+                                                        <option value="HIDUP">HIDUP</option>
+                                                        <option value="TENGGANG">TENGGANG</option>
+                                                        <option value="MATI">MATI</option>
+                                                    </select> -->
+
                                                 </div>
                                                 <div class="row">
                                                     <div class="col">
@@ -191,16 +203,44 @@ if (isset($_GET['q'])) {
                                         } else
                                             $query = mysqli_query($conn, "SELECT * FROM tnumber order by id asc");
                                         while ($row = mysqli_fetch_array($query)) {
+
+                                            $statusClass = '';
+                                            switch ($row['status']) {
+                                                case 'TENGGANG':
+                                                    // $statusClass = 'bg-warning';
+                                                    $statusClass = 'btn-warning';
+                                                    break;
+                                                case 'MATI':
+                                                    $statusClass = 'btn-danger';
+                                                    break;
+                                                    // Add more cases for other statuses if needed
+
+                                                    // Default case if none of the above conditions match
+                                                default:
+                                                    $statusClass = 'btn-success';
+                                                    break;
+                                            }
                                         ?>
                                             <tr>
                                                 <td><?= $no++ ?></td>
                                                 <td><?= $row['nomor_telp'] ?></td>
-                                                <td><?= $row['status'] ?></td>
+                                                <!-- <td><span class="badge rounded-pill <?= $statusClass ?>"><?= $row['status'] ?></span></td> -->
+                                                <td class="row-id" style="display: none;"><?= $row['id'] ?></td> <!-- Hidden row ID -->
+                                                <td>
+                                                    <button type="button" class="btn <?= $statusClass ?> dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                                        <?= $row['status'] ?>
+                                                    </button>
+                                                    <ul class="dropdown-menu">
+                                                        <li><a class="dropdown-item" href="#">HIDUP</a></li>
+                                                        <li><a class="dropdown-item" href="#">TENGGANG</a></li>
+                                                        <li><a class="dropdown-item" href="#">MATI</a></li>
+                                                    </ul>
+                                                </td>
                                                 <td><?= $row['tanggal_aktif'] ?></td>
                                                 <td><?= $row['tanggal_expired'] ?></td>
                                                 <td><?= $row['deskripsi'] ?></td>
                                                 <td>
-                                                    <a href="edit_number.php?q=edit&id=<?= $row['id'] ?>" name="bedit" class="btn btn-warning "><i class="fa-solid fa-pen-to-square"></i></a>
+                                                    <a href=" edit_number.php?q=edit&id=<?= $row['id'] ?>" name="bedit" class="btn btn-warning "><i class="fa-solid fa-pen-to-square"></i></a>
                                                     <a href="number_list.php?q=delete&id=<?= $row['id'] ?>" name="bdelete" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this data?')"><i class="fa-solid fa-trash"></i></a>
                                                 </td>
                                             </tr>
@@ -238,6 +278,18 @@ if (isset($_GET['q'])) {
     <!-- Page level custom scripts -->
     <script src="../assets/js/demo/chart-area-demo.js"></script>
     <script src="../assets/js/demo/chart-pie-demo.js"></script>
+
+    <!-- JavaScript -->
+    <script src="<?php echo BASE_URL ?>assets/js/script.js"></script>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
+
+    <!-- (Optional) Latest compiled and minified JavaScript translation files -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/i18n/defaults-*.min.js"></script>
 </body>
 
 </html>
