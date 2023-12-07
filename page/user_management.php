@@ -70,10 +70,11 @@ if (isset($_GET['q'])) {
     <script src="https://kit.fontawesome.com/fdb40b4321.js" crossorigin="anonymous"></script>
 
     <style>
-    .table td, .table th {
-        text-align: center;
-    }
-</style>
+        .table td,
+        .table th {
+            text-align: center;
+        }
+    </style>
 
 </head>
 
@@ -161,11 +162,37 @@ if (isset($_GET['q'])) {
                     $query = mysqli_query($conn, "SELECT * FROM user order by id asc");
 
                 while ($row = mysqli_fetch_array($query)) {
+
+                    $statusClass = '';
+                    switch ($row['role']) {
+                        case 'admin':
+                            // $statusClass = 'bg-warning';
+                            $statusClass = 'btn-warning';
+                            break;
+                        case 'aser':
+                            $statusClass = 'btn-danger';
+                            break;
+                            // Add more cases for other statuses if needed
+
+                            // Default case if none of the above conditions match
+                        default:
+                            $statusClass = 'btn-success';
+                            break;
+                    }
                 ?>
                     <tr>
                         <td><?= $no++ ?></td>
                         <td><?= $row['username'] ?></td>
-                        <td><?= $row['role'] ?></td>
+                        <td class="row-id" style="display: none;"><?= $row['id'] ?></td> <!-- Hidden row ID -->
+                        <td>
+                            <button type="button" class="btn <?= $statusClass ?> dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                <?= $row['role'] ?>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#">Admin</a></li>
+                                <li><a class="dropdown-item" href="#">User</a></li>
+                            </ul>
+                        </td>
                         <td><?= $row['name'] ?></td>
                         <td>
                             <a href="edit_user.php?q=edit&id=<?= $row['id'] ?>" name="bedit" class="btn btn-warning"><i class="fa-solid fa-pen-to-square"></i></a>
@@ -179,6 +206,8 @@ if (isset($_GET['q'])) {
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <!-- JavaScript -->
+    <script src="<?php echo BASE_URL ?>assets/js/script.js"></script>
 </body>
 
 </html>
