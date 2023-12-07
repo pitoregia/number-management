@@ -2,7 +2,7 @@
 <?php require_once(__DIR__ . '/../function/number_count.php'); ?>
 <?php require_once(__DIR__ . '/../function/date_checker.php'); ?>
 
-<div class="row mt-3">
+<div class="row mt-3 ml-3">
     <!-- WhatsApp ON Card -->
     <div class="col-12 col-md-6 col-lg-4 col-xl-4 mb-4">
         <div class="card border-left-success shadow h-100 p-4" style="border-radius: 30px; overflow: hidden;">
