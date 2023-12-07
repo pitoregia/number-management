@@ -5,7 +5,7 @@
 <div class="row mt-3">
     <!-- WhatsApp ON Card -->
     <div class="col-12 col-md-6 col-lg-4 col-xl-4 mb-4">
-        <div class="card border-left-success shadow h-100 p-3 rounded-3">
+        <div class="card border-left-success shadow h-100 p-4" style="border-radius: 30px; overflow: hidden;">
             <div class="media d-flex align-items-center card-body text-center">
                 <div class="avatar-sm">
                     <i class="fa-brands fa-whatsapp fa-4x avatar-title text-success"></i>
@@ -53,7 +53,7 @@
 
     <!-- User Card -->
     <div class="col-12 col-md-6 col-lg-4 col-xl-3 mb-4">
-        <div class="card border-left-primary shadow h-100 p-3 rounded-3">
+        <div class="card border-left-primary shadow h-100 p-4" style="border-radius: 30px; overflow: hidden;">
             <div class="media d-flex align-items-center card-body text-center">
                 <div class="avatar-sm bg-purple">
                     <i class="fas fa-users-gear fa-3x avatar-title text-primary"></i>
