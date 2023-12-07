@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Dec 05, 2023 at 03:14 AM
+-- Generation Time: Dec 07, 2023 at 10:47 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.1.12
 
@@ -42,8 +42,11 @@ CREATE TABLE `tnumber` (
 --
 
 INSERT INTO `tnumber` (`id`, `nomor_telp`, `deskripsi`, `status`, `tanggal_aktif`, `tanggal_expired`, `tanggal_simpan`) VALUES
-(1, '85733947500', 'Direct testing', 'Hidup', '2023-12-01', '2023-12-30', '2023-12-04 04:46:31'),
-(2, '88813276642', 'nox', 'Tenggang', '2023-11-30', '2023-12-21', '2023-12-04 04:46:08');
+(15, '088813276642', 'nox', 'HIDUP', '2023-12-31', '2023-12-31', '2023-12-07 09:29:15'),
+(16, '081277362209', 'Deskripsi', 'TENGGANG', '2023-12-07', '2023-12-07', '2023-12-07 09:33:44'),
+(17, '85733947500', 'Direct testing', 'MATI', '2023-12-07', '2023-12-07', '2023-12-07 07:11:28'),
+(18, '085177888832', 'Aku Joko', 'HIDUP', '2023-12-07', '2023-12-07', '2023-12-07 08:19:23'),
+(19, '023774633291', 'Testing 4', 'MATI', '2023-12-31', '2023-12-31', '2023-12-07 08:21:25');
 
 -- --------------------------------------------------------
 
@@ -55,7 +58,7 @@ CREATE TABLE `user` (
   `id` int(11) NOT NULL,
   `username` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
-  `role` enum('user','admin') NOT NULL,
+  `role` varchar(50) NOT NULL,
   `name` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -93,7 +96,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `tnumber`
 --
 ALTER TABLE `tnumber`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `user`

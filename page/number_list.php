@@ -13,7 +13,8 @@ session_start();
 if (isset($_POST['bsave'])) {
     $number = $_POST['number'];
     $description = $_POST['description'];
-    $status = $_POST['status'];
+    // $status = $_POST['status'];
+    $status = 'HIDUP';
     $tanggal_aktif = $_POST['tanggal-aktif'];
     $tanggal_expired = $_POST['tanggal-expired'];
 
@@ -24,10 +25,12 @@ if (isset($_POST['bsave'])) {
         echo "<script>alert('Data berhasil disimpan!');
                 document.location='number_list.php';
                 </script>";
+        header("Location: " . BASE_URL . "page/number_list.php");
     } else {
-        echo "<script>alert('Data gagal disimpan!')
-                document.location='number_list.php';
-                </script>";
+        // echo "<script>alert('Data gagal disimpan!')
+        //         document.location='number_list.php';
+        //         </script>";
+        header("Location: " . BASE_URL . "page/number_list.php");
     }
 }
 
@@ -130,7 +133,7 @@ if (isset($_GET['q'])) {
                                                     <label class="form-label">Description</label>
                                                     <input type="text" name="description" value="<?= $description ?>" class="form-control" required />
                                                 </div>
-                                                <div class="mb-3">
+                                                <!-- <div class="mb-3">
                                                     <label class="form-label">Status</label>
                                                     <br>
                                                     <div class="btn-group">
@@ -143,14 +146,14 @@ if (isset($_GET['q'])) {
                                                             <li><a class="dropdown-item" href="#">Mati</a></li>
                                                         </ul>
                                                     </div>
-                                                    <!-- <select class="form-select" name="status" required>
+                                                    <select class="form-select" name="status" required>
                                                         <option value="<?= $status ?>" selected hidden><?= $status ?></option>
                                                         <option value="HIDUP">HIDUP</option>
                                                         <option value="TENGGANG">TENGGANG</option>
                                                         <option value="MATI">MATI</option>
-                                                    </select> -->
+                                                    </select>
 
-                                                </div>
+                                                </div> -->
                                                 <div class="row">
                                                     <div class="col">
                                                         <div class="mb-3">
@@ -224,16 +227,15 @@ if (isset($_GET['q'])) {
                                             <tr>
                                                 <td><?= $no++ ?></td>
                                                 <td><?= $row['nomor_telp'] ?></td>
-                                                <!-- <td><span class="badge rounded-pill <?= $statusClass ?>"><?= $row['status'] ?></span></td> -->
                                                 <td class="row-id" style="display: none;"><?= $row['id'] ?></td> <!-- Hidden row ID -->
                                                 <td>
                                                     <button type="button" class="btn <?= $statusClass ?> dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                                                         <?= $row['status'] ?>
                                                     </button>
                                                     <ul class="dropdown-menu">
-                                                        <li><a class="dropdown-item" href="#">HIDUP</a></li>
-                                                        <li><a class="dropdown-item" href="#">TENGGANG</a></li>
-                                                        <li><a class="dropdown-item" href="#">MATI</a></li>
+                                                        <li><a class="dropdown-item status-item" href="#">HIDUP</a></li>
+                                                        <li><a class="dropdown-item status-item" href="#">TENGGANG</a></li>
+                                                        <li><a class="dropdown-item status-item" href="#">MATI</a></li>
                                                     </ul>
                                                 </td>
                                                 <td><?= $row['tanggal_aktif'] ?></td>

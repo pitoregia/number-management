@@ -56,7 +56,7 @@ if (isset($_GET['q_user'])) {
 <html lang="en">
 
 <head>
-<meta charset="utf-8">
+    <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
@@ -72,6 +72,13 @@ if (isset($_GET['q_user'])) {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
 
     <title>User Management</title>
+    <style>
+        .table td,
+        .table th {
+            text-align: center;
+        }
+    </style>
+
 </head>
 
 <body id="page-top">
@@ -108,111 +115,126 @@ if (isset($_GET['q_user'])) {
 
                                 <!-- Modal for User -->
                                 <div class="modal fade" id="addUserModal" tabindex="-1" aria-labelledby="addUserModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h1 class="modal-title fs-5" id="addUserModalLabel">Add new user</h1>
-                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                    </div>
-                                                    <form action="" method="POST">
-                                                        <div class="modal-body">
-                                                            <div class="mb-3">
-                                                                <label class="form-label">Username</label>
-                                                                <input type="text" name="username" class="form-control" required />
-                                                            </div>
-                                                            <div class="mb-3">
-                                                                <label class="form-label">Name</label>
-                                                                <input type="text" name="name" class="form-control" required />
-                                                            </div>
-                                                            <div class="mb-3">
-                                                                <label class="form-label">Password</label>
-                                                                <input type="password" name="password" class="form-control" required />
-                                                            </div>
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                            <button class="btn btn-primary" name="bsave_user" type="submit">Save changes</button>
-                                                        </div>
-                                                    </form>
-                                                </div>
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h1 class="modal-title fs-5" id="addUserModalLabel">Add new user</h1>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                             </div>
+                                            <form action="" method="POST">
+                                                <div class="modal-body">
+                                                    <div class="mb-3">
+                                                        <label class="form-label">Username</label>
+                                                        <input type="text" name="username" class="form-control" required />
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label class="form-label">Name</label>
+                                                        <input type="text" name="name" class="form-control" required />
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label class="form-label">Password</label>
+                                                        <input type="password" name="password" class="form-control" required />
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                    <button class="btn btn-primary" name="bsave_user" type="submit">Save changes</button>
+                                                </div>
+                                            </form>
                                         </div>
-
-
-                                <!-- User Management Table -->
-                                <div class="table-wrap">
-                                    <table class="table text-align-center table-responsive-xl">
-                                        <thead>
-                                            <tr>
-                                                <th>No.</th>
-                                                <th>Username</th>
-                                                <th>Role</th>
-                                                <th>Action</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <?php
-                                            $no_user = 1;
-                                            if (isset($_POST['bsearch_user'])) {
-                                                $search_user = $_POST['tsearch_user'];
-                                                $query_user = mysqli_query($conn, "SELECT * FROM user WHERE username LIKE '%$search_user%' or role LIKE '%$search_user%'");
-                                            } else {
-                                                $query_user = mysqli_query($conn, "SELECT * FROM user order by id asc");
-                                            }
-                                            while ($row_user = mysqli_fetch_array($query_user)) {
-                                            ?>
-                                                <tr>
-                                                    <td><?= $no_user++ ?></td>
-                                                    <td><?= $row_user['username'] ?></td>
-                                                    <td><?= $row_user['role'] ?></td>
-                                                    <td>
-                                                        <a href="edit_user.php?q_user=edit&id_user=<?= $row_user['id'] ?>" class="btn btn-warning"><i class="fa-solid fa-pen-to-square"></i></a>
-                                                        <a href="user_management.php?q_user=delete&id_user=<?= $row_user['id'] ?>" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this user?')"><i class="fa-solid fa-trash"></i></a>
-                                                    </td>
-                                                </tr>
-                                            <?php } ?>
-                                        </tbody>
-                                    </table>
+                                    </div>
                                 </div>
+
+                                <!-- User Table -->
+                                <table class="table table-striped table-hover table-bordered">
+                                    <tr>
+                                        <th>No.</th>
+                                        <th>Username</th>
+                                        <th>Role</th>
+                                        <th>Name</th>
+                                        <th>Action</th>
+                                    </tr>
+                                    <?php
+                                    $no = 1;
+
+                                    if (isset($_POST['bsearch'])) {
+                                        $search = $_POST['tsearch'];
+                                        $query = mysqli_query($conn, "SELECT * FROM user WHERE username LIKE '%$search%' or role LIKE '%$search%' or name LIKE '%$search%'");
+                                    } else
+                                        $query = mysqli_query($conn, "SELECT * FROM user order by id asc");
+
+                                    while ($row = mysqli_fetch_array($query)) {
+
+                                        $statusClass = '';
+                                        switch ($row['role']) {
+                                            case 'admin':
+                                                // $statusClass = 'bg-warning';
+                                                $statusClass = 'btn-warning';
+                                                break;
+                                            case 'aser':
+                                                $statusClass = 'btn-danger';
+                                                break;
+                                                // Add more cases for other statuses if needed
+
+                                                // Default case if none of the above conditions match
+                                            default:
+                                                $statusClass = 'btn-success';
+                                                break;
+                                        }
+                                    ?>
+                                        <tr>
+                                            <td><?= $no++ ?></td>
+                                            <td><?= $row['username'] ?></td>
+                                            <td class="row-id" style="display: none;"><?= $row['id'] ?></td> <!-- Hidden row ID -->
+                                            <td>
+                                                <button type="button" class="btn <?= $statusClass ?> dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    <?= $row['role'] ?>
+                                                </button>
+                                                <ul class="dropdown-menu">
+                                                    <li><a class="dropdown-item role-item" href="#">admin</a></li>
+                                                    <li><a class="dropdown-item role-item" href="#">user</a></li>
+                                                </ul>
+                                            </td>
+                                            <td><?= $row['name'] ?></td>
+                                            <td>
+                                                <a href="edit_user.php?q=edit&id=<?= $row['id'] ?>" name="bedit" class="btn btn-warning"><i class="fa-solid fa-pen-to-square"></i></a>
+                                                <a href="user_management.php?q=delete&id=<?= $row['id'] ?>" name="bdelete" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this user?')"><i class="fa-solid fa-trash"></i></a>
+                                            </td>
+                                        </tr>
+                                    <?php } ?>
+                                </table>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Footer -->
-            <?php include('../components/footer.php'); ?>
-        </div>
-    </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-    <!-- Bootstrap core JavaScript-->
-    <script src="../vendor/jquery/jquery.min.js"></script>
-    <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+                        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+                        <!-- Bootstrap core JavaScript-->
+                        <script src="../vendor/jquery/jquery.min.js"></script>
+                        <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Core plugin JavaScript-->
-    <script src="../vendor/jquery-easing/jquery.easing.min.js"></script>
+                        <!-- Core plugin JavaScript-->
+                        <script src="../vendor/jquery-easing/jquery.easing.min.js"></script>
 
-    <!-- Custom scripts for all pages-->
-    <script src="../assets/js/sb-admin-2.min.js"></script>
+                        <!-- Custom scripts for all pages-->
+                        <script src="../assets/js/sb-admin-2.min.js"></script>
 
-    <!-- Page level plugins -->
-    <script src="../vendor/chart.js/Chart.min.js"></script>
+                        <!-- Page level plugins -->
+                        <script src="../vendor/chart.js/Chart.min.js"></script>
 
-    <!-- Page level custom scripts -->
-    <script src="../assets/js/demo/chart-area-demo.js"></script>
-    <script src="../assets/js/demo/chart-pie-demo.js"></script>
+                        <!-- Page level custom scripts -->
+                        <script src="../assets/js/demo/chart-area-demo.js"></script>
+                        <script src="../assets/js/demo/chart-pie-demo.js"></script>
 
-    <!-- JavaScript -->
-    <script src="<?php echo BASE_URL ?>assets/js/script.js"></script>
+                        <!-- JavaScript -->
+                        <script src="<?php echo BASE_URL ?>assets/js/script.js"></script>
 
-    <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
+                        <!-- Latest compiled and minified CSS -->
+                        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
 
-    <!-- Latest compiled and minified JavaScript -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
+                        <!-- Latest compiled and minified JavaScript -->
+                        <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
 
-    <!-- (Optional) Latest compiled and minified JavaScript translation files -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/i18n/defaults-*.min.js"></script>
+                        <!-- (Optional) Latest compiled and minified JavaScript translation files -->
+                        <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/i18n/defaults-*.min.js"></script>
 
 </body>
 
