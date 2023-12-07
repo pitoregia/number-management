@@ -72,6 +72,7 @@ if (isset($_GET['q'])) {
         text-align: center;
     }
 </style>
+
 </head>
 
 <body>
