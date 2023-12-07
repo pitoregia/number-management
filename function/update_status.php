@@ -13,4 +13,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $stmt->bind_param("si", $status, $id);
     $stmt->execute();
     $stmt->close();
-}
+}    
+
+
