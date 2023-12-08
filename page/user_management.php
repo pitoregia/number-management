@@ -49,36 +49,6 @@ if (isset($_GET['q_user'])) {
     }
 }
 
-// // fetch data
-// if (isset($_GET['q'])) {
-//     if ($_GET['q'] == 'edit') {
-//         $query = mysqli_query($conn, "SELECT * FROM user WHERE id = '$_GET[id]'");
-//         $data = mysqli_fetch_array($query);
-//         if ($data) {
-//             $usernameData = $data['username'];
-//             $nameData = $data['name'];
-//         }
-//     }
-// }
-
-// // save edited data
-// if (isset($_POST['bsave'])) {
-//     $editedUsername = $_POST['editedUsername'];
-//     $editedName = $_POST['editedName'];
-
-//     // edit
-//     if (isset($_GET['q']) == 'edit') {
-//         $query = mysqli_query($conn, "UPDATE user SET username = '$editedUsername', name = '$editedName' WHERE id = '$_GET[id]'");
-//         if ($query) {
-//             echo "<script>alert('Data berhasil diubah!');
-//             $('#editUserModal').modal('hide');
-//             location.reload();
-//             </script>";
-//         } else {
-//             echo "<script>alert('Data gagal diubah!')</script>";
-//         }
-//     }
-// }
 ?>
 
 
@@ -95,7 +65,8 @@ if (isset($_GET['q_user'])) {
     <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
-    <link href="../assets/css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="<?php echo BASE_URL; ?>assets/css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="<?php echo BASE_URL; ?>assets/css/custom.css" rel="stylesheet">
     <script src="https://kit.fontawesome.com/fdb40b4321.js" crossorigin="anonymous"></script>
 
     <title>Dashboard | List</title>
@@ -179,8 +150,6 @@ if (isset($_GET['q_user'])) {
                                 <!-- Table User -->
                                 <div class="table-wrap card-shadow mb-4">
                                     <table class="table text-align-center table-responsive-xl table-bordered">
-                                        <!-- User Table -->
-                                        <!-- <table class="table table-striped table-hover table-bordered"> -->
                                         <tr>
                                             <th>No.</th>
                                             <th>Username</th>
