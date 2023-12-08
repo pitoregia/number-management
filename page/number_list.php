@@ -189,7 +189,7 @@ if (isset($_GET['q'])) {
                                 </div>
                             </div>
 
-                            <div class="table-wrap">
+                            <div class="table-wrap card-shadow mb-4">
                                 <table class="table text-align-center table-responsive-xl table-bordered ">
                                     <!-- <table class="table table-responsive-xl table-striped table-hover table-bordered"> -->
                                     <thead>

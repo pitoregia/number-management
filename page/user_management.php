@@ -145,8 +145,8 @@ if (isset($_GET['q_user'])) {
                                     </div>
                                 </div>
 
-                                <div class="table-wrap">
-                                <table class="table text-align-center table-responsive-xl table-bordered ">
+                                <div class="table-wrap card-shadow mb-4">
+                                <table class="table text-align-center table-responsive-xl table-bordered">
                                 <!-- User Table -->
                                 <!-- <table class="table table-striped table-hover table-bordered"> -->
                                     <tr>
@@ -159,8 +159,8 @@ if (isset($_GET['q_user'])) {
                                     <?php
                                     $no = 1;
 
-                                    if (isset($_POST['bsearch'])) {
-                                        $search = $_POST['tsearch'];
+                                    if (isset($_POST['bsearch_user'])) {
+                                        $search = $_POST['tsearch_user'];
                                         $query = mysqli_query($conn, "SELECT * FROM user WHERE username LIKE '%$search%' or role LIKE '%$search%' or name LIKE '%$search%'");
                                     } else
                                         $query = mysqli_query($conn, "SELECT * FROM user order by id asc");

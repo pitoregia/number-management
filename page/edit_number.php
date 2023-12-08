@@ -88,15 +88,6 @@ if (isset($_GET['q'])) {
                                 <label class="form-label">Description</label>
                                 <input type="text" name="description" value="<?= $description ?>" class="form-control" />
                             </div>
-                            <div class="mb-3">
-                                <label class="form-label">Status</label>
-                                <select class="form-select" name="status">
-                                    <option value="<?= $status ?>" selected hidden><?= $status ?></option>
-                                    <option value="Hidup">Hidup</option>
-                                    <option value="Tenggang">Tenggang</option>
-                                    <option value="Mati">Mati</option>
-                                </select>
-                            </div>
                             <div class="row">
                                 <div class="col">
                                     <div class="mb-3">
