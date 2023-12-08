@@ -13,10 +13,11 @@ if ($_SESSION['id'] == null) {
 // Handle user data insertion
 if (isset($_POST['bsave_user'])) {
     $username = $_POST['username'];
-    $role = $_POST['role'];
+    $role = 'USER';
     $password = md5($_POST['password']);
+    $name = $_POST['name'];
 
-    $query = mysqli_query($conn, "INSERT INTO user (username, role, password) VALUES ('$username', '$role', '$password')");
+    $query = mysqli_query($conn, "INSERT INTO user (username, role, password, name) VALUES ('$username', '$role', '$password','$name')");
 
     if ($query) {
         echo "<script>alert('User data saved successfully!');
@@ -37,7 +38,7 @@ $user_role = '';
 if (isset($_GET['q_user'])) {
     if ($_GET['q_user'] == 'delete') {
         // Delete user data from the 'users' table
-        $query = mysqli_query($conn, "DELETE FROM user WHERE id = '$_GET[id_user]'");
+        $query = mysqli_query($conn, "DELETE FROM user WHERE id = '$_GET[id]'");
         if ($query) {
             header("Location: " . BASE_URL . "page/user_management.php");
         } else {
@@ -174,32 +175,6 @@ if (isset($_GET['q_user'])) {
                                     </div>
                                 </div>
 
-                                <!-- Modal For Edit User -->
-                                <!-- <div class="modal fade" id="editUserModal" tabindex="-1" aria-labelledby="editUserModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title fs-5" id="editUserModalLabel">Edit User</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <form action="" method="POST">
-                                                    <div class="mb-3">
-                                                        <label class="form-label">Username</label>
-                                                        <input type="text" name="editedUsername" value="<?= $usernameData ?>" class="form-control" />
-                                                    </div>
-                                                    <div class="mb-3">
-                                                        <label class="form-label">Name</label>
-                                                        <input type="text" name="editedName" value="<?= $nameData ?>" class="form-control" />
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                    <button class="btn btn-primary" name="bsave" type="submit">Save changes</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div> -->
 
                                 <!-- Table User -->
                                 <div class="table-wrap card-shadow mb-4">
@@ -256,8 +231,8 @@ if (isset($_GET['q_user'])) {
                                                 </td>
                                                 <td><?= $row['name'] ?></td>
                                                 <td>
-                                                    <a href="user_management.php?q=edit&id=<?= $row['id'] ?>" name="bedit" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#editUserModal"><i class="fa-solid fa-pen-to-square"></i></a>
-                                                    <a href="user_management.php?q=delete&id=<?= $row['id'] ?>" name="bdelete" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this user?')"><i class="fa-solid fa-trash"></i></a>
+                                                    <a href="edit_user.php?q=edit&id=<?= $row['id'] ?>" name="bedit" class="btn btn-warning"><i class="fa-solid fa-pen-to-square"></i></a>
+                                                    <a href="user_management.php?q_user=delete&id=<?= $row['id'] ?>" name="bdelete" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this user?')"><i class="fa-solid fa-trash"></i></a>
                                                 </td>
                                             </tr>
                                         <?php } ?>
