@@ -2,6 +2,7 @@
 
 require_once '../function/dbconnect.php';
 require_once '../function/helper.php';
+// include '../function/date_checker.php';
 session_start();
 
 //
@@ -203,9 +204,25 @@ if (isset($_GET['q'])) {
                                                     $statusClass = 'btn-success';
                                                     break;
                                             }
+                                            $currentDate = date('Y-m-d');
+                                            if ($row['tanggal_expired'] < $currentDate) {
+                                                $expiredDateClass = 'text-danger'; // Date is in the past
+                                            } elseif (date('Y-m', strtotime($row['tanggal_expired'])) == date('Y-m', strtotime($currentDate))) {
+                                                $expiredDateClass = 'text-warning'; // Date is still in the current month
+                                            } else {
+                                                $expiredDateClass = 'text-success'; // Date is in the future months
+                                            }
+
+                                            if ($row['tanggal_aktif'] < $currentDate) {
+                                                $activeDateClass = 'text-danger'; // Date is in the past
+                                            } elseif (date('Y-m', strtotime($row['tanggal_aktif'])) == date('Y-m', strtotime($currentDate))) {
+                                                $activeDateClass = 'text-warning'; // Date is still in the current month
+                                            } else {
+                                                $activeDateClass = 'text-success'; // Date is in the future months
+                                            }
                                         ?>
                                             <tr>
-                                                <td><?= $no++ ?></td>
+                                                <td><strong><?= $no++ ?></strong></td>
                                                 <td><?= $row['nomor_telp'] ?></td>
                                                 <td class="row-id" style="display: none;"><?= $row['id'] ?></td> <!-- Hidden row ID -->
                                                 <td>
@@ -218,8 +235,8 @@ if (isset($_GET['q'])) {
                                                         <li><a class="dropdown-item status-item" href="#">MATI</a></li>
                                                     </ul>
                                                 </td>
-                                                <td><?= $row['tanggal_aktif'] ?></td>
-                                                <td><?= $row['tanggal_expired'] ?></td>
+                                                <td class="fw-bold <?php echo $activeDateClass ?>"><?= $row['tanggal_aktif'] ?></td>
+                                                <td class="fw-bold <?php echo $expiredDateClass ?>"><?= $row['tanggal_expired'] ?></td>
                                                 <td><?= $row['deskripsi'] ?></td>
                                                 <td>
                                                     <a href=" edit_number.php?q=edit&id=<?= $row['id'] ?>" name="bedit" class="btn btn-warning "><i class="fa-solid fa-pen-to-square"></i></a>
