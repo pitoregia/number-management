@@ -19,9 +19,15 @@ if (isset($_POST['bsave'])) {
     $name = $_POST['name'];
     $password = $_POST['password'];
 
+    // Check if a new password is provided
+    $hashed_password = $data['password']; // default to the current hashed password
+
+    if (!empty($password)) {
+        $hashed_password = md5($password); // MD5 hash the new password
+    }
+
     // Edit
     if (isset($_GET['q']) && $_GET['q'] == 'edit') {
-        $hashed_password = md5($password); // MD5 hash the password
         $query = mysqli_query($conn, "UPDATE user SET username = '$username', name = '$name', password = '$hashed_password' WHERE id = '$_GET[id]'");
         if ($query) {
             echo "<script>alert('Data berhasil diubah!');
