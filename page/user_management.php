@@ -48,7 +48,38 @@ if (isset($_GET['q_user'])) {
     }
 }
 
+// // fetch data
+// if (isset($_GET['q'])) {
+//     if ($_GET['q'] == 'edit') {
+//         $query = mysqli_query($conn, "SELECT * FROM user WHERE id = '$_GET[id]'");
+//         $data = mysqli_fetch_array($query);
+//         if ($data) {
+//             $usernameData = $data['username'];
+//             $nameData = $data['name'];
+//         }
+//     }
+// }
+
+// // save edited data
+// if (isset($_POST['bsave'])) {
+//     $editedUsername = $_POST['editedUsername'];
+//     $editedName = $_POST['editedName'];
+
+//     // edit
+//     if (isset($_GET['q']) == 'edit') {
+//         $query = mysqli_query($conn, "UPDATE user SET username = '$editedUsername', name = '$editedName' WHERE id = '$_GET[id]'");
+//         if ($query) {
+//             echo "<script>alert('Data berhasil diubah!');
+//             $('#editUserModal').modal('hide');
+//             location.reload();
+//             </script>";
+//         } else {
+//             echo "<script>alert('Data gagal diubah!')</script>";
+//         }
+//     }
+// }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -111,7 +142,7 @@ if (isset($_GET['q_user'])) {
                                     </div>
                                 </div>
 
-                                <!-- Modal for User -->
+                                <!-- Modal for add User -->
                                 <div class="modal fade" id="addUserModal" tabindex="-1" aria-labelledby="addUserModalLabel" aria-hidden="true">
                                     <div class="modal-dialog">
                                         <div class="modal-content">
@@ -143,6 +174,34 @@ if (isset($_GET['q_user'])) {
                                     </div>
                                 </div>
 
+                                <!-- Modal For Edit User -->
+                                <!-- <div class="modal fade" id="editUserModal" tabindex="-1" aria-labelledby="editUserModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title fs-5" id="editUserModalLabel">Edit User</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form action="" method="POST">
+                                                    <div class="mb-3">
+                                                        <label class="form-label">Username</label>
+                                                        <input type="text" name="editedUsername" value="<?= $usernameData ?>" class="form-control" />
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label class="form-label">Name</label>
+                                                        <input type="text" name="editedName" value="<?= $nameData ?>" class="form-control" />
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                    <button class="btn btn-primary" name="bsave" type="submit">Save changes</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> -->
+
+                                <!-- Table User -->
                                 <div class="table-wrap card-shadow mb-4">
                                     <table class="table text-align-center table-responsive-xl table-bordered">
                                         <!-- User Table -->
@@ -197,7 +256,7 @@ if (isset($_GET['q_user'])) {
                                                 </td>
                                                 <td><?= $row['name'] ?></td>
                                                 <td>
-                                                    <a href="edit_user.php?q=edit&id=<?= $row['id'] ?>" name="bedit" class="btn btn-warning"><i class="fa-solid fa-pen-to-square"></i></a>
+                                                    <a href="user_management.php?q=edit&id=<?= $row['id'] ?>" name="bedit" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#editUserModal"><i class="fa-solid fa-pen-to-square"></i></a>
                                                     <a href="user_management.php?q=delete&id=<?= $row['id'] ?>" name="bdelete" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this user?')"><i class="fa-solid fa-trash"></i></a>
                                                 </td>
                                             </tr>
@@ -205,6 +264,8 @@ if (isset($_GET['q_user'])) {
                                     </table>
                                 </div>
                             </div>
+
+
 
                             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
                             <!-- Bootstrap core JavaScript-->
