@@ -14,12 +14,10 @@ if ($_SESSION['id'] == null) {
 if (isset($_POST['bsave_user'])) {
     $username = $_POST['username'];
     $role = $_POST['role'];
-    $password = md5($_POST['password']); // Hash the password using MD5
+    $password = md5($_POST['password']);
 
-    // Insert user data into the 'users' table
     $query = mysqli_query($conn, "INSERT INTO user (username, role, password) VALUES ('$username', '$role', '$password')");
 
-    // Check if the query was successful
     if ($query) {
         echo "<script>alert('User data saved successfully!');
                 document.location='user_management.php';
@@ -146,97 +144,97 @@ if (isset($_GET['q_user'])) {
                                 </div>
 
                                 <div class="table-wrap card-shadow mb-4">
-                                <table class="table text-align-center table-responsive-xl table-bordered">
-                                <!-- User Table -->
-                                <!-- <table class="table table-striped table-hover table-bordered"> -->
-                                    <tr>
-                                        <th>No.</th>
-                                        <th>Username</th>
-                                        <th>Role</th>
-                                        <th>Name</th>
-                                        <th>Action</th>
-                                    </tr>
-                                    <?php
-                                    $no = 1;
-
-                                    if (isset($_POST['bsearch_user'])) {
-                                        $search = $_POST['tsearch_user'];
-                                        $query = mysqli_query($conn, "SELECT * FROM user WHERE username LIKE '%$search%' or role LIKE '%$search%' or name LIKE '%$search%'");
-                                    } else
-                                        $query = mysqli_query($conn, "SELECT * FROM user order by id asc");
-
-                                    while ($row = mysqli_fetch_array($query)) {
-
-                                        $statusClass = '';
-                                        switch ($row['role']) {
-                                            case 'ADMIN':
-                                                // $statusClass = 'bg-warning';
-                                                $statusClass = 'btn-warning';
-                                                break;
-                                            case 'USER':
-                                                $statusClass = 'btn-success';
-                                                break;
-                                                // Add more cases for other statuses if needed
-
-                                                // Default case if none of the above conditions match
-                                            default:
-                                                $statusClass = 'btn-danger';
-                                                break;
-                                        }
-                                    ?>
+                                    <table class="table text-align-center table-responsive-xl table-bordered">
+                                        <!-- User Table -->
+                                        <!-- <table class="table table-striped table-hover table-bordered"> -->
                                         <tr>
-                                            <td><?= $no++ ?></td>
-                                            <td><?= $row['username'] ?></td>
-                                            <td class="row-id" style="display: none;"><?= $row['id'] ?></td> <!-- Hidden row ID -->
-                                            <td>
-                                                <button type="button" class="btn <?= $statusClass ?> dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                                    <?= $row['role'] ?>
-                                                </button>
-                                                <ul class="dropdown-menu">
-                                                    <li><a class="dropdown-item role-item" href="#">ADMIN</a></li>
-                                                    <li><a class="dropdown-item role-item" href="#">USER</a></li>
-                                                </ul>
-                                            </td>
-                                            <td><?= $row['name'] ?></td>
-                                            <td>
-                                                <a href="edit_user.php?q=edit&id=<?= $row['id'] ?>" name="bedit" class="btn btn-warning"><i class="fa-solid fa-pen-to-square"></i></a>
-                                                <a href="user_management.php?q=delete&id=<?= $row['id'] ?>" name="bdelete" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this user?')"><i class="fa-solid fa-trash"></i></a>
-                                            </td>
+                                            <th>No.</th>
+                                            <th>Username</th>
+                                            <th>Role</th>
+                                            <th>Name</th>
+                                            <th>Action</th>
                                         </tr>
-                                    <?php } ?>
-                                </table>
+                                        <?php
+                                        $no = 1;
+
+                                        if (isset($_POST['bsearch_user'])) {
+                                            $search = $_POST['tsearch_user'];
+                                            $query = mysqli_query($conn, "SELECT * FROM user WHERE username LIKE '%$search%' or role LIKE '%$search%' or name LIKE '%$search%'");
+                                        } else
+                                            $query = mysqli_query($conn, "SELECT * FROM user order by id asc");
+
+                                        while ($row = mysqli_fetch_array($query)) {
+
+                                            $statusClass = '';
+                                            switch ($row['role']) {
+                                                case 'ADMIN':
+                                                    // $statusClass = 'bg-warning';
+                                                    $statusClass = 'btn-warning';
+                                                    break;
+                                                case 'USER':
+                                                    $statusClass = 'btn-success';
+                                                    break;
+                                                    // Add more cases for other statuses if needed
+
+                                                    // Default case if none of the above conditions match
+                                                default:
+                                                    $statusClass = 'btn-danger';
+                                                    break;
+                                            }
+                                        ?>
+                                            <tr>
+                                                <td><?= $no++ ?></td>
+                                                <td><?= $row['username'] ?></td>
+                                                <td class="row-id" style="display: none;"><?= $row['id'] ?></td> <!-- Hidden row ID -->
+                                                <td>
+                                                    <button type="button" class="btn <?= $statusClass ?> dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                                        <?= $row['role'] ?>
+                                                    </button>
+                                                    <ul class="dropdown-menu">
+                                                        <li><a class="dropdown-item role-item" href="#">ADMIN</a></li>
+                                                        <li><a class="dropdown-item role-item" href="#">USER</a></li>
+                                                    </ul>
+                                                </td>
+                                                <td><?= $row['name'] ?></td>
+                                                <td>
+                                                    <a href="edit_user.php?q=edit&id=<?= $row['id'] ?>" name="bedit" class="btn btn-warning"><i class="fa-solid fa-pen-to-square"></i></a>
+                                                    <a href="user_management.php?q=delete&id=<?= $row['id'] ?>" name="bdelete" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this user?')"><i class="fa-solid fa-trash"></i></a>
+                                                </td>
+                                            </tr>
+                                        <?php } ?>
+                                    </table>
+                                </div>
                             </div>
-                        </div>
 
-                        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-                        <!-- Bootstrap core JavaScript-->
-                        <script src="../vendor/jquery/jquery.min.js"></script>
-                        <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+                            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+                            <!-- Bootstrap core JavaScript-->
+                            <script src="../vendor/jquery/jquery.min.js"></script>
+                            <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-                        <!-- Core plugin JavaScript-->
-                        <script src="../vendor/jquery-easing/jquery.easing.min.js"></script>
+                            <!-- Core plugin JavaScript-->
+                            <script src="../vendor/jquery-easing/jquery.easing.min.js"></script>
 
-                        <!-- Custom scripts for all pages-->
-                        <script src="../assets/js/sb-admin-2.min.js"></script>
+                            <!-- Custom scripts for all pages-->
+                            <script src="../assets/js/sb-admin-2.min.js"></script>
 
-                        <!-- Page level plugins -->
-                        <script src="../vendor/chart.js/Chart.min.js"></script>
+                            <!-- Page level plugins -->
+                            <script src="../vendor/chart.js/Chart.min.js"></script>
 
-                        <!-- Page level custom scripts -->
-                        <script src="../assets/js/demo/chart-area-demo.js"></script>
-                        <script src="../assets/js/demo/chart-pie-demo.js"></script>
+                            <!-- Page level custom scripts -->
+                            <script src="../assets/js/demo/chart-area-demo.js"></script>
+                            <script src="../assets/js/demo/chart-pie-demo.js"></script>
 
-                        <!-- JavaScript -->
-                        <script src="<?php echo BASE_URL ?>assets/js/script.js"></script>
+                            <!-- JavaScript -->
+                            <script src="<?php echo BASE_URL ?>assets/js/script.js"></script>
 
-                        <!-- Latest compiled and minified CSS -->
-                        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
+                            <!-- Latest compiled and minified CSS -->
+                            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
 
-                        <!-- Latest compiled and minified JavaScript -->
-                        <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
+                            <!-- Latest compiled and minified JavaScript -->
+                            <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
 
-                        <!-- (Optional) Latest compiled and minified JavaScript translation files -->
-                        <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/i18n/defaults-*.min.js"></script>
+                            <!-- (Optional) Latest compiled and minified JavaScript translation files -->
+                            <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/i18n/defaults-*.min.js"></script>
 
 </body>
 

@@ -4,6 +4,9 @@ require_once '../function/dbconnect.php';
 require_once '../function/helper.php';
 session_start();
 
+//
+// check session
+//
 // $page = isset($_GET['page']) ? $_GET['page'] : false;
 // if ($_SESSION['id'] == null) {
 //     header("Location: " . BASE_URL);
@@ -18,19 +21,17 @@ if (isset($_POST['bsave'])) {
     $tanggal_aktif = $_POST['tanggal-aktif'];
     $tanggal_expired = $_POST['tanggal-expired'];
 
-    // save
     $query = mysqli_query($conn, "INSERT INTO tnumber (nomor_telp, status, tanggal_aktif, tanggal_expired, deskripsi) VALUES ('$number', '$status', '$tanggal_aktif', '$tanggal_expired', '$description')");
 
     if ($query) {
-        echo "<script>alert('Data berhasil disimpan!');
-                document.location='number_list.php';
-                </script>";
-        header("Location: " . BASE_URL . "page/number_list.php");
-    } else {
-        // echo "<script>alert('Data gagal disimpan!')
+        // echo "<script>alert('Data berhasil disimpan!');
         //         document.location='number_list.php';
         //         </script>";
         header("Location: " . BASE_URL . "page/number_list.php");
+    } else {
+        echo "<script>alert('Data gagal disimpan!')
+                document.location='number_list.php';
+                </script>";
     }
 }
 
@@ -45,9 +46,6 @@ if (isset($_GET['q'])) {
     if ($_GET['q'] == 'delete') {
         $query = mysqli_query($conn, "DELETE FROM tnumber WHERE id = '$_GET[id]'");
         if ($query) {
-            // echo "<script>alert('Data berhasil dihapus!');
-            // document.location='number_list.php';
-            // // </script>";
             header("Location: " . BASE_URL . "page/number_list.php");
         } else {
             echo "<script>alert('Data gagal dihapus!')
@@ -139,27 +137,6 @@ if (isset($_GET['q'])) {
                                                     <label class="form-label">Description</label>
                                                     <input type="text" name="description" value="<?= $description ?>" class="form-control" required />
                                                 </div>
-                                                <!-- <div class="mb-3">
-                                                    <label class="form-label">Status</label>
-                                                    <br>
-                                                    <div class="btn-group">
-                                                        <button type="button" class="btn btn-danger dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                                            Select
-                                                        </button>
-                                                        <ul class="dropdown-menu">
-                                                            <li><a class="dropdown-item" href="#">Hidup</a></li>
-                                                            <li><a class="dropdown-item" href="#">Tenggang</a></li>
-                                                            <li><a class="dropdown-item" href="#">Mati</a></li>
-                                                        </ul>
-                                                    </div>
-                                                    <select class="form-select" name="status" required>
-                                                        <option value="<?= $status ?>" selected hidden><?= $status ?></option>
-                                                        <option value="HIDUP">HIDUP</option>
-                                                        <option value="TENGGANG">TENGGANG</option>
-                                                        <option value="MATI">MATI</option>
-                                                    </select>
-
-                                                </div> -->
                                                 <div class="row">
                                                     <div class="col">
                                                         <div class="mb-3">
@@ -191,7 +168,6 @@ if (isset($_GET['q'])) {
 
                             <div class="table-wrap card-shadow mb-4">
                                 <table class="table text-align-center table-responsive-xl table-bordered ">
-                                    <!-- <table class="table table-responsive-xl table-striped table-hover table-bordered"> -->
                                     <thead>
                                         <tr>
                                             <th>No.</th>
@@ -222,9 +198,6 @@ if (isset($_GET['q'])) {
                                                 case 'MATI':
                                                     $statusClass = 'btn-danger';
                                                     break;
-                                                    // Add more cases for other statuses if needed
-
-                                                    // Default case if none of the above conditions match
                                                 default:
                                                     $statusClass = 'btn-success';
                                                     break;
@@ -257,12 +230,13 @@ if (isset($_GET['q'])) {
                                 </table>
                             </div>
                         </div>
-                        <!-- <div class="card-footer"></div> -->
                     </div>
                 </div>
             </div>
+
             <!-- Footer -->
             <?php include('../components/footer.php'); ?>
+
         </div>
     </div>
 
