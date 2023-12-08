@@ -145,8 +145,10 @@ if (isset($_GET['q_user'])) {
                                     </div>
                                 </div>
 
+                                <div class="table-wrap">
+                                <table class="table text-align-center table-responsive-xl table-bordered ">
                                 <!-- User Table -->
-                                <table class="table table-striped table-hover table-bordered">
+                                <!-- <table class="table table-striped table-hover table-bordered"> -->
                                     <tr>
                                         <th>No.</th>
                                         <th>Username</th>

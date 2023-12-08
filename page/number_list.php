@@ -78,6 +78,12 @@ if (isset($_GET['q'])) {
 
     <title>Dashboard | List</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <style>
+        .table td,
+        .table th {
+            text-align: center;
+        }
+    </style>
 
 </head>
 
@@ -184,7 +190,7 @@ if (isset($_GET['q'])) {
                             </div>
 
                             <div class="table-wrap">
-                                <table class="table text-align-center table-responsive-xl ">
+                                <table class="table text-align-center table-responsive-xl table-bordered ">
                                     <!-- <table class="table table-responsive-xl table-striped table-hover table-bordered"> -->
                                     <thead>
                                         <tr>
