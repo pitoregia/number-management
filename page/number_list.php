@@ -185,8 +185,9 @@ if (isset($_GET['q'])) {
                                         if (isset($_POST['bsearch'])) {
                                             $search = $_POST['tsearch'];
                                             $query = mysqli_query($conn, "SELECT * FROM tnumber WHERE nomor_telp LIKE '%$search%' or status LIKE '%$search%' or tanggal_aktif LIKE '%$search%' or tanggal_expired LIKE '%$search%' or deskripsi LIKE '%$search%'");
-                                        } else
+                                        } else {
                                             $query = mysqli_query($conn, "SELECT * FROM tnumber order by id asc");
+                                        }
                                         while ($row = mysqli_fetch_array($query)) {
 
                                             $statusClass = '';
