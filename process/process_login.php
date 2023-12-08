@@ -15,10 +15,10 @@ if (mysqli_num_rows($query) != 0) {
     $_SESSION['id'] = $row['id'];
     $_SESSION['role'] = $row['role'];
     $_SESSION['name'] = $row['name'];
-    if ($row['role'] == 'admin') {
+    if ($row['role'] == 'ADMIN') {
         // header("Location: " . BASE_URL . "dashboard.php?page=admin");
         header("Location: " . BASE_URL . "index.php?page=admin");
-    } else if ($row['role'] == 'user') {
+    } else if ($row['role'] == 'USER') {
         // header("Location: " . BASE_URL . "dashboard.php?page=user");
         header("Location: " . BASE_URL . "index.php?page=user");
     }
