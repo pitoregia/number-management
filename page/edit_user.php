@@ -19,9 +19,15 @@ if (isset($_POST['bsave'])) {
     $name = $_POST['name'];
     $password = $_POST['password'];
 
+    // Check if a new password is provided
+    $hashed_password = $data['password']; // default to the current hashed password
+
+    if (!empty($password)) {
+        $hashed_password = md5($password); // MD5 hash the new password
+    }
+
     // Edit
     if (isset($_GET['q']) && $_GET['q'] == 'edit') {
-        $hashed_password = md5($password); // MD5 hash the password
         $query = mysqli_query($conn, "UPDATE user SET username = '$username', name = '$name', password = '$hashed_password' WHERE id = '$_GET[id]'");
         if ($query) {
             echo "<script>alert('Data berhasil diubah!');
@@ -49,7 +55,8 @@ if (isset($_POST['bsave'])) {
     <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
-    <link href="../assets/css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="<?php echo BASE_URL; ?>assets/css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="<?php echo BASE_URL; ?>assets/css/custom.css" rel="stylesheet">
     <script src="https://kit.fontawesome.com/fdb40b4321.js" crossorigin="anonymous"></script>
 
     <title>Dashboard | Edit User</title>

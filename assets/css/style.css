@@ -1,0 +1,17 @@
+.fixed-left-sidebar {
+    position: fixed;
+    height: 100%;
+    transition: width 0.3s;
+}
+
+#content-wrapper {
+    transition: margin-left 0.3s;
+    padding: 0;
+    margin: 0;
+}
+
+@media (min-width: 768px) {
+    #content-wrapper {
+        margin-left: 250px; /* Adjust the width of the sidebar */
+    }
+}
