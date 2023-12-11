@@ -1,5 +1,5 @@
 <?php
-
+require_once '../function/check_dates_and_notify.php';
 require_once '../function/dbconnect.php';
 require_once '../function/helper.php';
 // include '../function/date_checker.php';
@@ -182,7 +182,8 @@ if (isset($_GET['q'])) {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <?php
+                                        
+                                    <?php
                                         $no = 1;
                                         if (isset($_POST['bsearch'])) {
                                             $search = $_POST['tsearch'];
@@ -191,6 +192,34 @@ if (isset($_GET['q'])) {
                                             $query = mysqli_query($conn, "SELECT * FROM tnumber order by id asc");
                                         }
                                         while ($row = mysqli_fetch_array($query)) {
+                                            $currentDate = date('Y-m-d');
+                                        
+                                            // Check if the expiration date has passed
+                                            if ($row['tanggal_expired'] < $currentDate) {
+                                                // Prepare and send notification for expiration
+                                                $notificationMessage = 'Phone number has expired!';
+                                                sendNotification($row['nomor_telp'], $notificationMessage);
+                                            }
+                                        
+                                            // Check if the active period date has passed
+                                            if ($row['tanggal_aktif'] < $currentDate) {
+                                                // Prepare and send notification for active period
+                                                $notificationMessage = 'Phone number has entering the grace period!';
+                                                sendNotification($row['nomor_telp'], $notificationMessage);
+                                            }
+                                        
+                                            $statusClass = '';
+                                            switch ($row['status']) {
+                                                case 'TENGGANG':
+                                                    $statusClass = 'btn-warning';
+                                                    break;
+                                                case 'MATI':
+                                                    $statusClass = 'btn-danger';
+                                                    break;
+                                                default:
+                                                    $statusClass = 'btn-success';
+                                                    break;
+                                            }
 
                                             $statusClass = '';
                                             switch ($row['status']) {
@@ -222,6 +251,8 @@ if (isset($_GET['q'])) {
                                                 $activeDateClass = 'text-success'; // Date is in the future months
                                             }
                                         ?>
+
+
                                             <tr>
                                                 <td><strong><?= $no++ ?></strong></td>
                                                 <td><?= $row['nomor_telp'] ?></td>
