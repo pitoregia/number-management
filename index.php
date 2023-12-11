@@ -1,6 +1,6 @@
 <?php
 session_start();
-if (!isset($_SESSION['username']) && !isset($_SESSION['id'])) {   ?>
+if (!isset($_SESSION['username']) && !isset($_SESSION['role_id'])) {   ?>
 
     <!DOCTYPE html>
     <html lang="en">

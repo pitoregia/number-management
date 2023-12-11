@@ -1,11 +1,15 @@
 <?php
-
+session_start();
 require_once '../function/dbconnect.php';
 require_once '../function/helper.php';
-session_start();
+
+if (!in_array("edit_user", $_SESSION['role_permission'])) {
+    header("Location: " . BASE_URL . "index.php");
+    exit();
+}
 
 // Check if the user is logged in
-if ($_SESSION['id'] == null) {
+if ($_SESSION['role_id'] == null) {
     header("Location: " . BASE_URL);
     exit();
 }
@@ -206,53 +210,53 @@ if (isset($_GET['q_user'])) {
                                             </tr>
                                         <?php } ?>
                                     </table>
-                                 </div>
-
                                 </div>
 
-                            </div>    
+                            </div>
 
                         </div>
 
-                    </div> 
+                    </div>
 
                 </div>
 
-                <!-- Footer -->
-                <?php include('../components/footer.php'); ?>    
-                          
             </div>
+
+            <!-- Footer -->
+            <?php include('../components/footer.php'); ?>
+
+        </div>
     </div>
 
-                            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-                            <!-- Bootstrap core JavaScript-->
-                            <script src="../vendor/jquery/jquery.min.js"></script>
-                            <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <!-- Bootstrap core JavaScript-->
+    <script src="../vendor/jquery/jquery.min.js"></script>
+    <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-                            <!-- Core plugin JavaScript-->
-                            <script src="../vendor/jquery-easing/jquery.easing.min.js"></script>
+    <!-- Core plugin JavaScript-->
+    <script src="../vendor/jquery-easing/jquery.easing.min.js"></script>
 
-                            <!-- Custom scripts for all pages-->
-                            <script src="../assets/js/sb-admin-2.min.js"></script>
+    <!-- Custom scripts for all pages-->
+    <script src="../assets/js/sb-admin-2.min.js"></script>
 
-                            <!-- Page level plugins -->
-                            <script src="../vendor/chart.js/Chart.min.js"></script>
+    <!-- Page level plugins -->
+    <script src="../vendor/chart.js/Chart.min.js"></script>
 
-                            <!-- Page level custom scripts -->
-                            <script src="../assets/js/demo/chart-area-demo.js"></script>
-                            <script src="../assets/js/demo/chart-pie-demo.js"></script>
+    <!-- Page level custom scripts -->
+    <script src="../assets/js/demo/chart-area-demo.js"></script>
+    <script src="../assets/js/demo/chart-pie-demo.js"></script>
 
-                            <!-- JavaScript -->
-                            <script src="<?php echo BASE_URL ?>assets/js/script.js"></script>
+    <!-- JavaScript -->
+    <script src="<?php echo BASE_URL ?>assets/js/script.js"></script>
 
-                            <!-- Latest compiled and minified CSS -->
-                            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
 
-                            <!-- Latest compiled and minified JavaScript -->
-                            <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
 
-                            <!-- (Optional) Latest compiled and minified JavaScript translation files -->
-                            <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/i18n/defaults-*.min.js"></script>
+    <!-- (Optional) Latest compiled and minified JavaScript translation files -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/i18n/defaults-*.min.js"></script>
 
 </body>
 

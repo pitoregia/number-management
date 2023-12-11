@@ -8,7 +8,7 @@
 
     <!-- Topbar Search -->
     <img src="<?php echo BASE_URL ?>assets/img/logo.png" alt="logo" class="sidebar-logo m-2 p-3" style="min-width: 100px; width: 10%; height: auto;">
-
+    <!-- <?php print_r($_SESSION['role_permission']); ?> LOGGING-->
     <!-- Topbar Navbar -->
     <ul class="navbar-nav ml-auto">
 
@@ -30,7 +30,7 @@
         <!-- Nav Item - User Information -->
         <li class="nav-item dropdown no-arrow mx-4">
             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="mr-2 d-none d-lg-inline text-gray-600 "><?php echo $_SESSION['name'] ?></span>
+                <span class="mr-2 d-none d-lg-inline text-gray-600 "><?php echo $_SESSION['name'] ?> (<?php echo $_SESSION['role'] ?>)</span>
                 <i class="fas fa-angle-down fa-sm"></i>
             </a>
             <!-- Dropdown - User Information -->

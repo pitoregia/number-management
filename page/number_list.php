@@ -1,16 +1,13 @@
 <?php
-require_once '../function/check_dates_and_notify.php';
+// require_once '../function/check_dates_and_notify.php';
 require_once '../function/dbconnect.php';
 require_once '../function/helper.php';
 // include '../function/date_checker.php';
 session_start();
 
-//
-// check session
-//
-// $page = isset($_GET['page']) ? $_GET['page'] : false;
-// if ($_SESSION['id'] == null) {
-//     header("Location: " . BASE_URL);
+// if (!in_array("edit_number", $_SESSION['role_permission'])) {
+//     echo "<h1>Access Denied</h1>";
+//     include("inc_footer.php");
 //     exit();
 // }
 
@@ -178,12 +175,14 @@ if (isset($_GET['q'])) {
                                             <th>Tanggal Masa Aktif</th>
                                             <th>Tanggal Masa Expired</th>
                                             <th>Deskripsi</th>
-                                            <th>Action</th>
+                                            <?php if (in_array("edit_number", $_SESSION['role_permission'])) { ?>
+                                                <th>Action</th>
+                                            <?php } ?>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        
-                                    <?php
+
+                                        <?php
                                         $no = 1;
                                         if (isset($_POST['bsearch'])) {
                                             $search = $_POST['tsearch'];
@@ -193,21 +192,21 @@ if (isset($_GET['q'])) {
                                         }
                                         while ($row = mysqli_fetch_array($query)) {
                                             $currentDate = date('Y-m-d');
-                                        
-                                            // Check if the expiration date has passed
-                                            if ($row['tanggal_expired'] < $currentDate) {
-                                                // Prepare and send notification for expiration
-                                                $notificationMessage = 'Phone number has expired!';
-                                                sendNotification($row['nomor_telp'], $notificationMessage);
-                                            }
-                                        
-                                            // Check if the active period date has passed
-                                            if ($row['tanggal_aktif'] < $currentDate) {
-                                                // Prepare and send notification for active period
-                                                $notificationMessage = 'Phone number has entering the grace period!';
-                                                sendNotification($row['nomor_telp'], $notificationMessage);
-                                            }
-                                        
+
+                                            // // Check if the expiration date has passed
+                                            // if ($row['tanggal_expired'] < $currentDate) {
+                                            //     // Prepare and send notification for expiration
+                                            //     $notificationMessage = 'Phone number has expired!';
+                                            //     sendNotification($row['nomor_telp'], $notificationMessage);
+                                            // }
+
+                                            // // Check if the active period date has passed
+                                            // if ($row['tanggal_aktif'] < $currentDate) {
+                                            //     // Prepare and send notification for active period
+                                            //     $notificationMessage = 'Phone number has entering the grace period!';
+                                            //     sendNotification($row['nomor_telp'], $notificationMessage);
+                                            // }
+
                                             $statusClass = '';
                                             switch ($row['status']) {
                                                 case 'TENGGANG':
@@ -258,22 +257,30 @@ if (isset($_GET['q'])) {
                                                 <td><?= $row['nomor_telp'] ?></td>
                                                 <td class="row-id" style="display: none;"><?= $row['id'] ?></td> <!-- Hidden row ID -->
                                                 <td>
-                                                    <button type="button" class="btn <?= $statusClass ?> dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                                        <?= $row['status'] ?>
-                                                    </button>
-                                                    <ul class="dropdown-menu">
-                                                        <li><a class="dropdown-item status-item" href="#">HIDUP</a></li>
-                                                        <li><a class="dropdown-item status-item" href="#">TENGGANG</a></li>
-                                                        <li><a class="dropdown-item status-item" href="#">MATI</a></li>
-                                                    </ul>
+                                                    <?php if (in_array("edit_user", $_SESSION['role_permission'])) { ?>
+                                                        <button type="button" class="btn <?= $statusClass ?> dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                                            <?= $row['status'] ?>
+                                                        </button>
+                                                        <ul class="dropdown-menu">
+                                                            <li><a class="dropdown-item status-item" href="#">HIDUP</a></li>
+                                                            <li><a class="dropdown-item status-item" href="#">TENGGANG</a></li>
+                                                            <li><a class="dropdown-item status-item" href="#">MATI</a></li>
+                                                        </ul>
+                                                    <?php } else { ?>
+                                                        <button type="button" class="btn <?= $statusClass ?> " data-bs-toggle="dropdown" aria-expanded="false">
+                                                            <?= $row['status'] ?>
+                                                        </button>
+                                                    <?php } ?>
                                                 </td>
                                                 <td class="fw-bold <?php echo $activeDateClass ?>"><?= $row['tanggal_aktif'] ?></td>
                                                 <td class="fw-bold <?php echo $expiredDateClass ?>"><?= $row['tanggal_expired'] ?></td>
                                                 <td><?= $row['deskripsi'] ?></td>
-                                                <td>
-                                                    <a href=" edit_number.php?q=edit&id=<?= $row['id'] ?>" name="bedit" class="btn btn-warning "><i class="fa-solid fa-pen-to-square"></i></a>
-                                                    <a href="number_list.php?q=delete&id=<?= $row['id'] ?>" name="bdelete" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this data?')"><i class="fa-solid fa-trash"></i></a>
-                                                </td>
+                                                <?php if (in_array("edit_number", $_SESSION['role_permission'])) { ?>
+                                                    <td>
+                                                        <a href=" edit_number.php?q=edit&id=<?= $row['id'] ?>" name="bedit" class="btn btn-warning "><i class="fa-solid fa-pen-to-square"></i></a>
+                                                        <a href="number_list.php?q=delete&id=<?= $row['id'] ?>" name="bdelete" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this data?')"><i class="fa-solid fa-trash"></i></a>
+                                                    </td>
+                                                <?php } ?>
                                             </tr>
                                         <?php } ?>
                                     </tbody>
