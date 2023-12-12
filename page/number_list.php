@@ -109,18 +109,20 @@ if (isset($_GET['q'])) {
                                             </div>
                                         </form>
                                     </div>
-                                    <div class="col-auto">
-                                       <form name="notifyForm" method="post">
-                                         <button type="submit" id="notifyButton" class="btn btn-warning">
-                                            <i class="fa-brands fa-telegram fa-xl"></i>
-                                        </button>
-                                       </form>
-                                    </div>
-                                    <div class="col-auto">
-                                        <button type=" button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addNumberModal">
-                                            <i class="fa-solid fa-plus"></i>
-                                        </button>
-                                    </div>
+                                    <?php if (in_array("edit_number", $_SESSION['role_permission'])) { ?>
+                                        <div class="col-auto">
+                                            <form name="notifyForm" method="post">
+                                                <button type="submit" id="notifyButton" class="btn btn-warning">
+                                                    <i class="fa-brands fa-telegram fa-xl"></i>
+                                                </button>
+                                            </form>
+                                        </div>
+                                        <div class="col-auto">
+                                            <button type=" button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addNumberModal">
+                                                <i class="fa-solid fa-plus"></i>
+                                            </button>
+                                        </div>
+                                    <?php } ?>
                                 </div>
                             </div>
 
