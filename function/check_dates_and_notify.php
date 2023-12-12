@@ -66,7 +66,7 @@ function checkRateLimit() {
             if ($elapsedTime < $interval) {
                 // Rate limit exceeded, wait for the remaining time
                 $remainingTime = $interval - $elapsedTime;
-                die("Rate limit exceeded. Please wait for {$remainingTime} seconds before trying again.");
+                sleep($remainingTime + 5); // Add an extra 5 seconds as a safety margin
             }
 
             // Reset the counters if the time interval has passed
@@ -79,7 +79,7 @@ function checkRateLimit() {
 // Check rate limit before processing notifications
 checkRateLimit();
 
-if (isset($_POST['notifyButton'])) { 
+if (isset($_POST['notifyButton'])) {
     $query = mysqli_query($conn, "SELECT * FROM tnumber order by id asc");
     while ($row = mysqli_fetch_array($query)) {
         $currentDate = date('Y-m-d');
@@ -87,16 +87,32 @@ if (isset($_POST['notifyButton'])) {
         // Check if the expiration date has passed
         if ($row['tanggal_expired'] < $currentDate) {
             // Prepare and send notification for expiration
-            $notificationMessage = 'Phone number has expired!';
-            sendNotification($row['nomor_telp'], $notificationMessage);
+            sendNotificationWithRetry($row['nomor_telp'], 'Phone number has expired!');
         }
 
         // Check if the active period date has passed
         if ($row['tanggal_aktif'] < $currentDate) {
             // Prepare and send notification for active period
-            $notificationMessage = 'Phone number has entering the grace period!';
-            sendNotification($row['nomor_telp'], $notificationMessage);
+            sendNotificationWithRetry($row['nomor_telp'], 'Phone number has entering the grace period!');
         }
     }
 }
 
+function sendNotificationWithRetry($phoneNumber, $notificationMessage) {
+    $maxRetries = 3;
+    $retryDelay = 60; // 1 minute delay between retries
+
+    for ($retryCount = 0; $retryCount < $maxRetries; $retryCount++) {
+        $response = sendNotification($phoneNumber, $notificationMessage);
+
+        // Check if the response indicates a rate limit error
+        if (strpos($response, 'Too Many Requests') !== false) {
+            // Implement a delay before retrying
+            sleep($retryDelay);
+        } else {
+            // Success, exit the loop
+            break;
+        }
+    }
+}
+?>
