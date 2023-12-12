@@ -43,6 +43,42 @@ function sendNotification($phoneNumber, $notificationMessage) {
     return $response;
 }
 
+// Function to handle rate limiting
+function checkRateLimit() {
+    session_start();
+
+    // Set the rate limit details
+    $limit = 20; // Number of requests allowed
+    $interval = 40; // Time interval in seconds
+
+    // Check if the session variables are set
+    if (!isset($_SESSION['request_count'])) {
+        $_SESSION['request_count'] = 1;
+        $_SESSION['last_request_time'] = time();
+    } else {
+        // Increment the request count
+        $_SESSION['request_count']++;
+
+        // Check if the rate limit has been reached
+        if ($_SESSION['request_count'] > $limit) {
+            // Check if the time interval has passed
+            $elapsedTime = time() - $_SESSION['last_request_time'];
+            if ($elapsedTime < $interval) {
+                // Rate limit exceeded, wait for the remaining time
+                $remainingTime = $interval - $elapsedTime;
+                die("Rate limit exceeded. Please wait for {$remainingTime} seconds before trying again.");
+            }
+
+            // Reset the counters if the time interval has passed
+            $_SESSION['request_count'] = 1;
+            $_SESSION['last_request_time'] = time();
+        }
+    }
+}
+
+// Check rate limit before processing notifications
+checkRateLimit();
+
 if (isset($_POST['notifyButton'])) { 
     $query = mysqli_query($conn, "SELECT * FROM tnumber order by id asc");
     while ($row = mysqli_fetch_array($query)) {
