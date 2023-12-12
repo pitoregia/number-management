@@ -110,6 +110,13 @@ if (isset($_GET['q'])) {
                                         </form>
                                     </div>
                                     <div class="col-auto">
+                                       <form name="notifyForm" method="post">
+                                         <button type="submit" id="notifyButton" class="btn btn-warning">
+                                            <i class="fa-brands fa-telegram fa-xl"></i>
+                                        </button>
+                                       </form>
+                                    </div>
+                                    <div class="col-auto">
                                         <button type=" button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addNumberModal">
                                             <i class="fa-solid fa-plus"></i>
                                         </button>
@@ -183,6 +190,7 @@ if (isset($_GET['q'])) {
                                     <tbody>
 
                                         <?php
+
                                         $no = 1;
                                         if (isset($_POST['bsearch'])) {
                                             $search = $_POST['tsearch'];
@@ -329,6 +337,9 @@ if (isset($_GET['q'])) {
 
     <!-- (Optional) Latest compiled and minified JavaScript translation files -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/i18n/defaults-*.min.js"></script>
+
+    <script src="<?php echo BASE_URL ?>assets/js/Notif_check.js"></script>
+
 </body>
 
 </html>

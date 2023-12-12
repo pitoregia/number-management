@@ -43,4 +43,24 @@ function sendNotification($phoneNumber, $notificationMessage) {
     return $response;
 }
 
+if (isset($_POST['notifyButton'])) { 
+    $query = mysqli_query($conn, "SELECT * FROM tnumber order by id asc");
+    while ($row = mysqli_fetch_array($query)) {
+        $currentDate = date('Y-m-d');
+
+        // Check if the expiration date has passed
+        if ($row['tanggal_expired'] < $currentDate) {
+            // Prepare and send notification for expiration
+            $notificationMessage = 'Phone number has expired!';
+            sendNotification($row['nomor_telp'], $notificationMessage);
+        }
+
+        // Check if the active period date has passed
+        if ($row['tanggal_aktif'] < $currentDate) {
+            // Prepare and send notification for active period
+            $notificationMessage = 'Phone number has entering the grace period!';
+            sendNotification($row['nomor_telp'], $notificationMessage);
+        }
+    }
+}
 
