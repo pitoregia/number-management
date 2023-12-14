@@ -1,3 +1,5 @@
+// USER MANAGEMENT
+// ROLE SELECTION
 $(document).ready(function () {
     $('.role-item').click(function () {
         var role = $(this).text();
@@ -15,6 +17,9 @@ $(document).ready(function () {
     });
 });
 
+
+// NUMBER MANAGEMENT
+// Number Status
 $(document).ready(function () {
     $('.status-item').click(function () {
         var status = $(this).text();

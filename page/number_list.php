@@ -31,6 +31,16 @@ if (isset($_POST['bsave'])) {
                 document.location='number_list.php';
                 </script>";
     }
+
+
+
+    // Fetch PIC dropdown items
+    $picSql = "SELECT id, name FROM dropdown_items WHERE category = 'pic'";
+    // Execute query and display dropdown items...
+
+    // Fetch current_application dropdown items
+    $currentAppSql = "SELECT id, name FROM dropdown_items WHERE category = 'current_application'";
+    // Execute query and display dropdown items...
 }
 
 
@@ -98,7 +108,7 @@ if (isset($_GET['q'])) {
         <div id="content-wrapper" class="d-flex flex-column">
             <?php include('../components/topbar.php'); ?>
             <div id="content">
-                <div class="container">
+                <div class="container-fluid">
                     <div class="card col-12 mt-4 mx-auto shadow">
                         <!-- <div class="card-header bg-secondary text-light">Data Phone Number</div> -->
                         <div class="card-body">
@@ -186,9 +196,14 @@ if (isset($_GET['q'])) {
                                             <th>No.</th>
                                             <th>Nomor</th>
                                             <th>Status</th>
-                                            <th>Tanggal Masa Aktif</th>
-                                            <th>Tanggal Masa Expired</th>
-                                            <th>Deskripsi</th>
+                                            <th>Tanggal Aktif</th>
+                                            <th>Tanggal Expired</th>
+                                            <!-- <th>Deskripsi</th> -->
+                                            <th>Current Device</th>
+                                            <th>WA Status</th>
+                                            <th>PIC</th>
+                                            <th>Scan Status</th>
+                                            <th>Current Application</th>
                                             <?php if (in_array("edit_number", $_SESSION['role_permission'])) { ?>
                                                 <th>Action</th>
                                             <?php } ?>
@@ -206,64 +221,8 @@ if (isset($_GET['q'])) {
                                             $query = mysqli_query($conn, "SELECT * FROM tnumber order by id asc");
                                         }
                                         while ($row = mysqli_fetch_array($query)) {
-                                            $currentDate = date('Y-m-d');
+                                            include '../function/class_checker.php';
 
-                                            // // Check if the expiration date has passed
-                                            // if ($row['tanggal_expired'] < $currentDate) {
-                                            //     // Prepare and send notification for expiration
-                                            //     $notificationMessage = 'Phone number has expired!';
-                                            //     sendNotification($row['nomor_telp'], $notificationMessage);
-                                            // }
-
-                                            // // Check if the active period date has passed
-                                            // if ($row['tanggal_aktif'] < $currentDate) {
-                                            //     // Prepare and send notification for active period
-                                            //     $notificationMessage = 'Phone number has entering the grace period!';
-                                            //     sendNotification($row['nomor_telp'], $notificationMessage);
-                                            // }
-
-                                            $statusClass = '';
-                                            switch ($row['status']) {
-                                                case 'TENGGANG':
-                                                    $statusClass = 'btn-warning';
-                                                    break;
-                                                case 'MATI':
-                                                    $statusClass = 'btn-danger';
-                                                    break;
-                                                default:
-                                                    $statusClass = 'btn-success';
-                                                    break;
-                                            }
-
-                                            $statusClass = '';
-                                            switch ($row['status']) {
-                                                case 'TENGGANG':
-                                                    // $statusClass = 'bg-warning';
-                                                    $statusClass = 'btn-warning';
-                                                    break;
-                                                case 'MATI':
-                                                    $statusClass = 'btn-danger';
-                                                    break;
-                                                default:
-                                                    $statusClass = 'btn-success';
-                                                    break;
-                                            }
-                                            $currentDate = date('Y-m-d');
-                                            if ($row['tanggal_expired'] < $currentDate) {
-                                                $expiredDateClass = 'text-danger'; // Date is in the past
-                                            } elseif (date('Y-m', strtotime($row['tanggal_expired'])) == date('Y-m', strtotime($currentDate))) {
-                                                $expiredDateClass = 'text-warning'; // Date is still in the current month
-                                            } else {
-                                                $expiredDateClass = 'text-success'; // Date is in the future months
-                                            }
-
-                                            if ($row['tanggal_aktif'] < $currentDate) {
-                                                $activeDateClass = 'text-danger'; // Date is in the past
-                                            } elseif (date('Y-m', strtotime($row['tanggal_aktif'])) == date('Y-m', strtotime($currentDate))) {
-                                                $activeDateClass = 'text-warning'; // Date is still in the current month
-                                            } else {
-                                                $activeDateClass = 'text-success'; // Date is in the future months
-                                            }
                                         ?>
 
 
@@ -289,10 +248,123 @@ if (isset($_GET['q'])) {
                                                 </td>
                                                 <td class="fw-bold <?php echo $activeDateClass ?>"><?= $row['tanggal_aktif'] ?></td>
                                                 <td class="fw-bold <?php echo $expiredDateClass ?>"><?= $row['tanggal_expired'] ?></td>
-                                                <td><?= $row['deskripsi'] ?></td>
+                                                <!-- <td><?= $row['deskripsi'] ?></td> -->
+
+
+
+                                                <?php
+                                                // Fetch device dropdown items
+                                                $deviceSql = "SELECT id, name FROM dropdown_items WHERE category = 'device'";
+                                                $deviceQuery = mysqli_query($conn, $deviceSql);
+
+                                                // Fetch the selected device name for the current row
+                                                $device_id = $row['device_id'];
+                                                $selectedDeviceSql = "SELECT name FROM dropdown_items WHERE id = '$device_id'";
+                                                $selectedDeviceQuery = mysqli_query($conn, $selectedDeviceSql);
+                                                $selectedDeviceRow = mysqli_fetch_assoc($selectedDeviceQuery);
+                                                $selectedDeviceName = $selectedDeviceRow['name'];
+                                                ?>
+
+                                                <td>
+                                                    <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                                        <?= $selectedDeviceName ?>
+                                                    </button>
+                                                    <ul class="dropdown-menu">
+                                                        <?php
+                                                        // Display device dropdown items
+                                                        while ($deviceRow = mysqli_fetch_assoc($deviceQuery)) {
+                                                            echo '<li><a class="dropdown-item status-item" href="#">' . $deviceRow['name'] . '</a></li>';
+                                                        }
+                                                        ?>
+                                                    </ul>
+                                                </td>
+
+
+                                                <td>
+                                                    <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                                        <?= $row['wa_status'] ?>
+                                                    </button>
+                                                    <ul class="dropdown-menu">
+                                                        <li><a class="dropdown-item status-item" href="#">AVAILABLE</a></li>
+                                                        <li><a class="dropdown-item status-item" href="#">BANNED</a></li>
+                                                        <li><a class="dropdown-item status-item" href="#">BANNED PERMANENT</a></li>
+                                                        <li><a class="dropdown-item status-item" href="#">UNREGISTERED</a></li>
+                                                        <li><a class="dropdown-item status-item" href="#">ERROR OFFICIAL</a></li>
+                                                    </ul>
+                                                </td>
+
+
+
+                                                <?php
+                                                // Fetch device dropdown items
+                                                $picSql = "SELECT id, name FROM dropdown_items WHERE category = 'pic'";
+                                                $picQuery = mysqli_query($conn, $picSql);
+
+                                                // Fetch the selected pic name for the current row
+                                                $pic_id = $row['pic_id'];
+                                                $selectedPicSql = "SELECT name FROM dropdown_items WHERE id = '$pic_id'";
+                                                $selectedPicQuery = mysqli_query($conn, $selectedPicSql);
+                                                $selectedPicRow = mysqli_fetch_assoc($selectedPicQuery);
+                                                $selectedPicName = $selectedPicRow['name'];
+                                                ?>
+
+                                                <td>
+                                                    <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                                        <?= $selectedPicName ?>
+                                                    </button>
+                                                    <ul class="dropdown-menu">
+                                                        <?php
+                                                        // Display pic dropdown items
+                                                        while ($picRow = mysqli_fetch_assoc($picQuery)) {
+                                                            echo '<li><a class="dropdown-item status-item" href="#">' . $picRow['name'] . '</a></li>';
+                                                        }
+                                                        ?>
+                                                    </ul>
+                                                </td>
+
+
+                                                <td>
+                                                    <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                                        <?= $row['scanned'] ?>
+                                                    </button>
+                                                    <ul class="dropdown-menu">
+                                                        <li><a class="dropdown-item status-item" href="#">SCANNED</a></li>
+                                                        <li><a class="dropdown-item status-item" href="#">NOT SCANNED</a></li>
+                                                    </ul>
+                                                </td>
+
+
+                                                <?php
+                                                // Fetch device dropdown items
+                                                $currentApplicationSql = "SELECT id, name FROM dropdown_items WHERE category = 'current_application'";
+                                                $currentApplicationQuery = mysqli_query($conn, $currentApplicationSql);
+
+                                                // Fetch the selected currentApplication name for the current row
+                                                $currentApplication_id = $row['current_application_id'];
+                                                $selectedcurrentApplicationSql = "SELECT name FROM dropdown_items WHERE id = '$currentApplication_id'";
+                                                $selectedcurrentApplicationQuery = mysqli_query($conn, $selectedcurrentApplicationSql);
+                                                $selectedcurrentApplicationRow = mysqli_fetch_assoc($selectedcurrentApplicationQuery);
+                                                $selectedcurrentApplicationName = $selectedcurrentApplicationRow['name'];
+                                                ?>
+
+                                                <td>
+                                                    <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                                        <?= $selectedcurrentApplicationName ?>
+                                                    </button>
+                                                    <ul class="dropdown-menu">
+                                                        <?php
+                                                        // Display currentApplication dropdown items
+                                                        while ($currentApplicationRow = mysqli_fetch_assoc($currentApplicationQuery)) {
+                                                            echo '<li><a class="dropdown-item status-item" href="#">' . $currentApplicationRow['name'] . '</a></li>';
+                                                        }
+                                                        ?>
+                                                    </ul>
+                                                </td>
+
+
                                                 <?php if (in_array("edit_number", $_SESSION['role_permission'])) { ?>
                                                     <td>
-                                                        <a href=" edit_number.php?q=edit&id=<?= $row['id'] ?>" name="bedit" class="btn btn-warning "><i class="fa-solid fa-pen-to-square"></i></a>
+                                                        <!-- <a href=" edit_number.php?q=edit&id=<?= $row['id'] ?>" name="bedit" class="btn btn-warning "><i class="fa-solid fa-pen-to-square"></i></a> -->
                                                         <a href="number_list.php?q=delete&id=<?= $row['id'] ?>" name="bdelete" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this data?')"><i class="fa-solid fa-trash"></i></a>
                                                     </td>
                                                 <?php } ?>

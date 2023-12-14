@@ -15,8 +15,9 @@ if (mysqli_num_rows($q1) != 0) {
     $_SESSION['role'] = $r1['role'];
     $_SESSION['name'] = $r1['name'];
 
-
     $role_id = $r1['role_id'];
+
+
     $sql1 = "SELECT * FROM role_permission WHERE role_id = '$role_id'";
 
     $q2 = mysqli_query($conn, $sql1);
@@ -25,9 +26,6 @@ if (mysqli_num_rows($q1) != 0) {
     while ($r2 = mysqli_fetch_assoc($q2)) {
         $access[] = $r2['permission_id'];
     }
-    // while ($r1 = mysqli_fetch_array($q1)) {
-    //     $access[] = $r1['permission_id'];
-    // }
 
     if (empty($access)) {
         echo "<li>Access not found</li>";
@@ -44,22 +42,3 @@ if (mysqli_num_rows($q1) != 0) {
 } else {
     header("Location: " . BASE_URL . "index.php?error=failed");
 }
-
-
-// if (mysqli_num_rows($query) != 0) {
-//     $row = mysqli_fetch_assoc($query);
-
-//     session_start();
-//     $_SESSION['id'] = $row['id'];
-//     $_SESSION['role'] = $row['role'];
-//     $_SESSION['name'] = $row['name'];
-//     if ($row['role'] == 'ADMIN') {
-//         // header("Location: " . BASE_URL . "dashboard.php?page=admin");
-//         header("Location: " . BASE_URL . "index.php?page=admin");
-//     } else if ($row['role'] == 'USER') {
-//         // header("Location: " . BASE_URL . "dashboard.php?page=user");
-//         header("Location: " . BASE_URL . "index.php?page=user");
-//     }
-// } else {
-//     header("Location: " . BASE_URL . "index.php?error=failed");
-// }

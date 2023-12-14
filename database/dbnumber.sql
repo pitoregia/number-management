@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Dec 11, 2023 at 10:38 AM
+-- Generation Time: Dec 14, 2023 at 07:14 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.1.12
 
@@ -20,6 +20,33 @@ SET time_zone = "+00:00";
 --
 -- Database: `dbnumber`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `dropdown_items`
+--
+
+CREATE TABLE `dropdown_items` (
+  `id` int(11) NOT NULL,
+  `category` varchar(50) NOT NULL,
+  `name` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `dropdown_items`
+--
+
+INSERT INTO `dropdown_items` (`id`, `category`, `name`) VALUES
+(1, 'device', 'Device 1'),
+(2, 'device', 'Device 2'),
+(3, 'device', 'Device 3'),
+(4, 'pic', 'John'),
+(5, 'pic', 'Bob'),
+(6, 'pic', 'Alice'),
+(7, 'current_application', 'App 1'),
+(8, 'current_application', 'App 2'),
+(9, 'current_application', 'App 3');
 
 -- --------------------------------------------------------
 
@@ -87,23 +114,24 @@ INSERT INTO `role_permission` (`role_id`, `permission_id`) VALUES
 CREATE TABLE `tnumber` (
   `id` int(11) NOT NULL,
   `nomor_telp` varchar(15) NOT NULL,
-  `deskripsi` varchar(100) NOT NULL,
-  `status` varchar(50) NOT NULL,
   `tanggal_aktif` date NOT NULL,
   `tanggal_expired` date NOT NULL,
-  `tanggal_simpan` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `status` varchar(50) NOT NULL,
+  `wa_status` varchar(15) NOT NULL,
+  `scanned` varchar(15) NOT NULL,
+  `deskripsi` varchar(100) NOT NULL,
+  `tanggal_simpan` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `device_id` int(11) DEFAULT NULL,
+  `pic_id` int(11) DEFAULT NULL,
+  `current_application_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `tnumber`
 --
 
-INSERT INTO `tnumber` (`id`, `nomor_telp`, `deskripsi`, `status`, `tanggal_aktif`, `tanggal_expired`, `tanggal_simpan`) VALUES
-(15, '088813276642', 'noxes', 'HIDUP', '2024-01-31', '2024-02-29', '2023-12-08 08:44:00'),
-(16, '081277362209', 'Deskripsi', 'TENGGANG', '2023-12-07', '2023-12-07', '2023-12-07 09:48:44'),
-(17, '85733947500', 'Direct testing', 'HIDUP', '2023-12-31', '2024-01-31', '2023-12-08 08:44:17'),
-(18, '085177888832', 'Aku Joko', 'TENGGANG', '2023-12-07', '2023-12-07', '2023-12-08 07:49:27'),
-(19, '023774633291', 'Testing 4', 'MATI', '2023-12-31', '2023-12-31', '2023-12-07 08:21:25');
+INSERT INTO `tnumber` (`id`, `nomor_telp`, `tanggal_aktif`, `tanggal_expired`, `status`, `wa_status`, `scanned`, `deskripsi`, `tanggal_simpan`, `device_id`, `pic_id`, `current_application_id`) VALUES
+(2, '0895155272238', '2023-12-01', '2023-12-31', 'HIDUP', 'AVAILABLE', 'SCANNED', 'Testing', '2023-12-14 04:25:40', 1, 4, 8);
 
 -- --------------------------------------------------------
 
@@ -135,6 +163,12 @@ INSERT INTO `user` (`id`, `username`, `password`, `role`, `name`, `role_id`) VAL
 --
 
 --
+-- Indexes for table `dropdown_items`
+--
+ALTER TABLE `dropdown_items`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `permission`
 --
 ALTER TABLE `permission`
@@ -157,7 +191,10 @@ ALTER TABLE `role_permission`
 -- Indexes for table `tnumber`
 --
 ALTER TABLE `tnumber`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `device_id` (`device_id`),
+  ADD KEY `pic_id` (`pic_id`),
+  ADD KEY `current_application_id` (`current_application_id`);
 
 --
 -- Indexes for table `user`
@@ -171,10 +208,16 @@ ALTER TABLE `user`
 --
 
 --
+-- AUTO_INCREMENT for table `dropdown_items`
+--
+ALTER TABLE `dropdown_items`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
 -- AUTO_INCREMENT for table `tnumber`
 --
 ALTER TABLE `tnumber`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `user`
@@ -192,6 +235,14 @@ ALTER TABLE `user`
 ALTER TABLE `role_permission`
   ADD CONSTRAINT `role_permission_ibfk_1` FOREIGN KEY (`role_id`) REFERENCES `role` (`role_id`),
   ADD CONSTRAINT `role_permission_ibfk_2` FOREIGN KEY (`permission_id`) REFERENCES `permission` (`permission_id`);
+
+--
+-- Constraints for table `tnumber`
+--
+ALTER TABLE `tnumber`
+  ADD CONSTRAINT `tnumber_ibfk_1` FOREIGN KEY (`device_id`) REFERENCES `dropdown_items` (`id`),
+  ADD CONSTRAINT `tnumber_ibfk_2` FOREIGN KEY (`pic_id`) REFERENCES `dropdown_items` (`id`),
+  ADD CONSTRAINT `tnumber_ibfk_3` FOREIGN KEY (`current_application_id`) REFERENCES `dropdown_items` (`id`);
 
 --
 -- Constraints for table `user`
