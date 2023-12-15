@@ -3,35 +3,118 @@
 $(document).ready(function () {
     $('.role-item').click(function () {
         var role = $(this).text();
-        var rowId = $(this).closest('tr').find('.row-id').text(); // Add a class 'row-id' to the <td> that contains the row ID
+        var rowId = $(this).closest('tr').find('.row-id').text();
 
         $.ajax({
             type: 'POST',
-            url: '../function/update_status.php', // Create a separate PHP file for handling the update
+            url: '../function/update_status.php',
             data: { id: rowId, role: role },
             success: function () {
-                // Optionally, you can update the UI here if needed
-                location.reload(); // Reload the page to reflect the changes
+                location.reload();
             }
         });
     });
 });
 
-
+//
 // NUMBER MANAGEMENT
-// Number Status
+// Number Status Update
 $(document).ready(function () {
     $('.status-item').click(function () {
         var status = $(this).text();
-        var rowId = $(this).closest('tr').find('.row-id').text(); // Add a class 'row-id' to the <td> that contains the row ID
+        var rowId = $(this).closest('tr').find('.row-id').text();
 
         $.ajax({
             type: 'POST',
-            url: '../function/update_status.php', // Create a separate PHP file for handling the update
+            url: '../function/update_status.php',
             data: { id: rowId, status: status },
             success: function () {
-                // Optionally, you can update the UI here if needed
-                location.reload(); // Reload the page to reflect the changes
+                location.reload();
+            }
+        });
+    });
+});
+
+// Device Update
+$(document).ready(function () {
+    $('.device-item').click(function () {
+        var device_id = $(this).data('device-id');
+        var rowId = $(this).closest('tr').find('.row-id').text();
+
+        $.ajax({
+            type: 'POST',
+            url: '../function/update_status.php',
+            data: { id: rowId, device_id: device_id },
+            success: function () {
+                location.reload();
+            }
+        });
+    });
+});
+
+// PIC Update
+$(document).ready(function () {
+    $('.pic-item').click(function () {
+        var pic_id = $(this).data('pic-id');
+        var rowId = $(this).closest('tr').find('.row-id').text();
+
+        $.ajax({
+            type: 'POST',
+            url: '../function/update_status.php',
+            data: { id: rowId, pic_id: pic_id },
+            success: function () {
+                location.reload();
+            }
+        });
+    });
+});
+
+// Current Application Update
+$(document).ready(function () {
+    $('.current-application-item').click(function () {
+        var current_application_id = $(this).data('current-application-id');
+        var rowId = $(this).closest('tr').find('.row-id').text();
+
+        $.ajax({
+            type: 'POST',
+            url: '../function/update_status.php',
+            data: { id: rowId, current_application_id: current_application_id },
+            success: function () {
+                location.reload();
+            }
+        });
+    });
+});
+
+// Whatsapp Status Update
+$(document).ready(function () {
+    $('.wa-status-item').click(function () {
+        var wa_status = $(this).text();
+        var rowId = $(this).closest('tr').find('.row-id').text();
+
+        $.ajax({
+            type: 'POST',
+            url: '../function/update_status.php',
+            data: { id: rowId, wa_status: wa_status },
+            success: function () {
+                location.reload();
+            }
+        });
+    });
+});
+
+// Scanned Status Update
+$(document).ready(function () {
+    $('.scanned-item').click(function () {
+        var scanned = $(this).text();
+        var rowId = $(this).closest('tr').find('.row-id').text();
+
+        $.ajax({
+            type: 'POST',
+            url: '../function/update_status.php',
+            data: { id: rowId, scanned: scanned },
+            success: function () {
+                location.reload();
             }
         });
     });

@@ -273,7 +273,7 @@ if (isset($_GET['q'])) {
                                                         <?php
                                                         // Display device dropdown items
                                                         while ($deviceRow = mysqli_fetch_assoc($deviceQuery)) {
-                                                            echo '<li><a class="dropdown-item status-item" href="#">' . $deviceRow['name'] . '</a></li>';
+                                                            echo '<li><a class="dropdown-item device-item" data-device-id="' . $deviceRow['id'] . '"href="#">' . $deviceRow['name'] . '</a></li>';
                                                         }
                                                         ?>
                                                     </ul>
@@ -285,11 +285,11 @@ if (isset($_GET['q'])) {
                                                         <?= $row['wa_status'] ?>
                                                     </button>
                                                     <ul class="dropdown-menu">
-                                                        <li><a class="dropdown-item status-item" href="#">AVAILABLE</a></li>
-                                                        <li><a class="dropdown-item status-item" href="#">BANNED</a></li>
-                                                        <li><a class="dropdown-item status-item" href="#">BANNED PERMANENT</a></li>
-                                                        <li><a class="dropdown-item status-item" href="#">UNREGISTERED</a></li>
-                                                        <li><a class="dropdown-item status-item" href="#">ERROR OFFICIAL</a></li>
+                                                        <li><a class="dropdown-item wa-status-item" href="#">AVAILABLE</a></li>
+                                                        <li><a class="dropdown-item wa-status-item" href="#">BANNED</a></li>
+                                                        <li><a class="dropdown-item wa-status-item" href="#">BANNED PERMANENT</a></li>
+                                                        <li><a class="dropdown-item wa-status-item" href="#">UNREGISTERED</a></li>
+                                                        <li><a class="dropdown-item wa-status-item" href="#">ERROR OFFICIAL</a></li>
                                                     </ul>
                                                 </td>
 
@@ -316,7 +316,7 @@ if (isset($_GET['q'])) {
                                                         <?php
                                                         // Display pic dropdown items
                                                         while ($picRow = mysqli_fetch_assoc($picQuery)) {
-                                                            echo '<li><a class="dropdown-item status-item" href="#">' . $picRow['name'] . '</a></li>';
+                                                            echo '<li><a class="dropdown-item pic-item" data-pic-id="' . $picRow['id'] . '" href="#">' . $picRow['name'] . '</a></li>';
                                                         }
                                                         ?>
                                                     </ul>
@@ -328,8 +328,8 @@ if (isset($_GET['q'])) {
                                                         <?= $row['scanned'] ?>
                                                     </button>
                                                     <ul class="dropdown-menu">
-                                                        <li><a class="dropdown-item status-item" href="#">SCANNED</a></li>
-                                                        <li><a class="dropdown-item status-item" href="#">NOT SCANNED</a></li>
+                                                        <li><a class="dropdown-item scanned-item" href="#">SCANNED</a></li>
+                                                        <li><a class="dropdown-item scanned-item" href="#">NOT SCANNED</a></li>
                                                     </ul>
                                                 </td>
 
@@ -355,7 +355,7 @@ if (isset($_GET['q'])) {
                                                         <?php
                                                         // Display currentApplication dropdown items
                                                         while ($currentApplicationRow = mysqli_fetch_assoc($currentApplicationQuery)) {
-                                                            echo '<li><a class="dropdown-item status-item" href="#">' . $currentApplicationRow['name'] . '</a></li>';
+                                                            echo '<li><a class="dropdown-item current-application-item" data-current-application-id="' . $currentApplicationRow['id'] . '" href="#">' . $currentApplicationRow['name'] . '</a></li>';
                                                         }
                                                         ?>
                                                     </ul>
