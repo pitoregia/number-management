@@ -65,7 +65,7 @@ function isPageActive($page)
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Number Management</h6>
                 <a class="collapse-item" href="<?php echo BASE_URL ?>page/number_list.php">Number List</a>
-                <a class="collapse-item" href="/">Master List</a>
+                <a class="collapse-item" href="<?php echo BASE_URL ?>page/master_list.php">Master List</a>
             </div>
         </div>
     </li>
