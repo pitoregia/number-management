@@ -47,38 +47,46 @@ session_start();
         <div id="content-wrapper" class="d-flex flex-column">
             <?php include('../components/topbar.php'); ?>
 
-
-            <div class="table-wrap card-shadow mb-4">
-                <nav>
-                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                        <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Device</button>
-                        <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">PIC</button>
-                        <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">Current Application</button>
+            <div class="container-fluid">
+                <div class="card text-center">
+                    <div class="card-header">
+                        <ul class="nav nav-tabs card-header-tabs">
+                            <li class="nav-item">
+                                <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Device</button>
+                            </li>
+                            <li class="nav-item">
+                                <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">PIC</button>
+                            </li>
+                            <li class="nav-item">
+                                <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">Current Application</button>
+                            </li>
+                        </ul>
                     </div>
-                </nav>
-                <div class="tab-content" id="nav-tabContent">
-                    <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
-                        <table class="table text-align-center table-responsive-xl table-bordered">
-                            <thead>
-                                <tr>
-                                    <th>Device</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php
-                                $deviceSql = "SELECT id, name FROM dropdown_items WHERE category = 'device'";
-                                $deviceQuery = mysqli_query($conn, $deviceSql);
-                                while ($deviceRow = mysqli_fetch_assoc($deviceQuery)) {
-                                    echo '<tr><td>' . $deviceRow['name'] . '</a></td></tr>';
-                                }
-                                ?>
-                            </tbody>
-                        </table>
+                    <div class="card-body">
+                        <div class="tab-content" id="nav-tabContent">
+                            <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                                <table class="table text-align-center table-responsive-xl table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Device</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php
+                                        $deviceSql = "SELECT id, name FROM dropdown_items WHERE category = 'device'";
+                                        $deviceQuery = mysqli_query($conn, $deviceSql);
+                                        while ($deviceRow = mysqli_fetch_assoc($deviceQuery)) {
+                                            echo '<tr><td>' . $deviceRow['name'] . '</a></td></tr>';
+                                        }
+                                        ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">PIC TABLE</div>
+                            <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">APP TABLE</div>
+                        </div>
                     </div>
-                    <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">...</div>
-                    <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">...</div>
                 </div>
-
             </div>
 
             <?php include('../components/footer.php'); ?>
