@@ -1,14 +1,13 @@
 <?php
 
-// require_once '../function/check_dates_and_notify.php';
 require_once '../function/dbconnect.php';
 require_once '../function/helper.php';
-// include '../function/date_checker.php';
 session_start();
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -38,83 +37,53 @@ session_start();
     </style>
 
 </head>
+
 <body id="page-top">
 
-
     <div id="wrapper">
-    <?php include('../components/sidebar.php'); ?>
+        <?php include('../components/sidebar.php'); ?>
 
         <!-- Main Content -->
         <div id="content-wrapper" class="d-flex flex-column">
-        <?php include('../components/topbar.php'); ?>
+            <?php include('../components/topbar.php'); ?>
 
-           <div class="table-wrap card-shadow mb-4">
-            <table class="table text-align-center table-responsive-xl table-bordered">
-                    <thead>
-                        <tr>
-                            <th>Device</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php
-                        // Fetch device data from the database with a filter for category 'device'
-                        $sql = "SELECT category FROM dropdown_items WHERE category = 'device'";
-                        $result = $conn->query($sql);
 
-                        // Display device data in the table
-                        if ($result->num_rows > 0) {
-                            while ($row = $result->fetch_assoc()) {
-                                echo "<tr>";
-                                echo "<td>" . $row['category'] . "</td>";
-                                echo "</tr>";
-                            }
-                        } else {
-                            echo "<tr><td>No device data available</td></tr>";
-                        }
+            <div class="table-wrap card-shadow mb-4">
+                <nav>
+                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                        <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Device</button>
+                        <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">PIC</button>
+                        <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">Current Application</button>
+                    </div>
+                </nav>
+                <div class="tab-content" id="nav-tabContent">
+                    <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                        <table class="table text-align-center table-responsive-xl table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Device</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                $deviceSql = "SELECT id, name FROM dropdown_items WHERE category = 'device'";
+                                $deviceQuery = mysqli_query($conn, $deviceSql);
+                                while ($deviceRow = mysqli_fetch_assoc($deviceQuery)) {
+                                    echo '<tr><td>' . $deviceRow['name'] . '</a></td></tr>';
+                                }
+                                ?>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">...</div>
+                    <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">...</div>
+                </div>
 
-                        // Close connection
-                        $conn->close();
-                        ?>
-                    </tbody>
-                </table>
             </div>
 
             <?php include('../components/footer.php'); ?>
         </div>
     </div>
-
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-    <!-- Bootstrap core JavaScript-->
-    <script src="../vendor/jquery/jquery.min.js"></script>
-    <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-    <!-- Core plugin JavaScript-->
-    <script src="../vendor/jquery-easing/jquery.easing.min.js"></script>
-
-    <!-- Custom scripts for all pages-->
-    <script src="../assets/js/sb-admin-2.min.js"></script>
-
-    <!-- Page level plugins -->
-    <script src="../vendor/chart.js/Chart.min.js"></script>
-
-    <!-- Page level custom scripts -->
-    <script src="../assets/js/demo/chart-area-demo.js"></script>
-    <script src="../assets/js/demo/chart-pie-demo.js"></script>
-
-    <!-- JavaScript -->
-    <script src="<?php echo BASE_URL ?>assets/js/script.js"></script>
-
-    <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
-
-    <!-- Latest compiled and minified JavaScript -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
-
-    <!-- (Optional) Latest compiled and minified JavaScript translation files -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/i18n/defaults-*.min.js"></script>
-
-    <script src="<?php echo BASE_URL ?>assets/js/Notif_check.js"></script>
-
 </body>
+
 </html>
