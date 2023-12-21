@@ -1,41 +1,42 @@
 <?php
-
 require_once '../function/dbconnect.php';
 require_once '../function/helper.php';
 session_start();
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (isset($_POST['deleteItems']) && !empty($_POST['deleteItems'])) {
+        deleteItems($_POST['deleteItems']);
+    }
+}
+
+function deleteItems($itemIds) {
+    global $conn;
+
+    $safeItemIds = array_map('intval', $itemIds);
+    $deleteIds = implode(',', $safeItemIds);
+    $sql = "DELETE FROM dropdown_items WHERE id IN ($deleteIds)";
+
+    if (mysqli_query($conn, $sql)) {
+        echo '<script>alert("Items deleted successfully.");</script>';
+    } else {
+        echo '<script>alert("Error deleting items.");</script>';
+    }
+}
+
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-
-    <link rel="apple-touch-icon" sizes="180x180" href="../assets/icon/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="../assets/icon/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="../assets/icon/favicon-16x16.png">
-    <link rel="manifest" href="../assets/icon/site.webmanifest">
-
-    <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
-
-    <link href="<?php echo BASE_URL; ?>assets/css/sb-admin-2.min.css" rel="stylesheet">
-    <link href="<?php echo BASE_URL; ?>assets/css/custom.css" rel="stylesheet">
-    <script src="https://kit.fontawesome.com/fdb40b4321.js" crossorigin="anonymous"></script>
-
+    <?php include('../components/header.php'); ?>
     <title>Dashboard | List</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
     <style>
         .table td,
         .table th {
             text-align: center;
         }
     </style>
-
 </head>
 
 <body id="page-top">
@@ -43,47 +44,105 @@ session_start();
     <div id="wrapper">
         <?php include('../components/sidebar.php'); ?>
 
-        <!-- Main Content -->
         <div id="content-wrapper" class="d-flex flex-column">
             <?php include('../components/topbar.php'); ?>
 
-            <div class="container-fluid">
-                <div class="card text-center">
-                    <div class="card-header">
-                        <ul class="nav nav-tabs card-header-tabs">
-                            <li class="nav-item">
-                                <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Device</button>
-                            </li>
-                            <li class="nav-item">
-                                <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">PIC</button>
-                            </li>
-                            <li class="nav-item">
-                                <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">Current Application</button>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="card-body">
-                        <div class="tab-content" id="nav-tabContent">
-                            <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
-                                <table class="table text-align-center table-responsive-xl table-bordered">
-                                    <thead>
-                                        <tr>
-                                            <th>Device</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <?php
-                                        $deviceSql = "SELECT id, name FROM dropdown_items WHERE category = 'device'";
-                                        $deviceQuery = mysqli_query($conn, $deviceSql);
-                                        while ($deviceRow = mysqli_fetch_assoc($deviceQuery)) {
-                                            echo '<tr><td>' . $deviceRow['name'] . '</a></td></tr>';
-                                        }
-                                        ?>
-                                    </tbody>
-                                </table>
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-md-7">
+                        <div class="card mt-4 shadow">
+                            <div class="card-header bg-primary text-white">
+                                <ul class="nav nav-tabs card-header-tabs">
+                                    <li class="nav-item mx-1">
+                                        <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Device</button>
+                                    </li>
+                                    <li class="nav-item mx-1">
+                                        <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">PIC</button>
+                                    </li>
+                                    <li class="nav-item mx-1">
+                                        <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">Current Application</button>
+                                    </li>
+                                    <form method="post" id="deleteForm">
+                                        <button type="button" class="btn btn-danger ms-auto mx-1" onclick="deleteItems()">Delete <i class="fas fa-trash"></i></button>
+                                    </form>
+                                    <button class="btn btn-success" onclick="addItem()">Add <i class="fas fa-plus"></i></button>
+                                </ul>
                             </div>
-                            <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">PIC TABLE</div>
-                            <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">APP TABLE</div>
+                            <div class="card-body">
+                                <div class="tab-content" id="nav-tabContent">
+                                    <!-- Device Table -->
+                                    <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                                        <form method="post">
+                                            <table class="table text-align-center table-responsive-xl table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th style="width: 5%;">
+                                                        </th>
+                                                        <th>Device</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <?php
+                                                    $deviceSql = "SELECT id, name FROM dropdown_items WHERE category = 'device'";
+                                                    $deviceQuery = mysqli_query($conn, $deviceSql);
+                                                    while ($deviceRow = mysqli_fetch_assoc($deviceQuery)) {
+                                                        echo '<tr><td><input type="checkbox" class="deviceCheckbox" name="deleteItems[]" value="' . $deviceRow['id'] . '"></td><td>' . $deviceRow['name'] . '</td></tr>';
+                                                    }
+                                                    ?>
+                                                </tbody>
+                                            </table>
+                                        </form>
+                                    </div>
+
+                                    <!-- PIC Table -->
+                                    <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                                        <form method="post">
+                                            <table class="table text-align-center table-responsive-xl table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th style="width: 5%;">
+                                                        </th>
+                                                        <th>PIC</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <?php
+                                                    $picSql = "SELECT id, name FROM dropdown_items WHERE category = 'pic'";
+                                                    $picQuery = mysqli_query($conn, $picSql);
+                                                    while ($picRow = mysqli_fetch_assoc($picQuery)) {
+                                                        echo '<tr><td><input type="checkbox" class="picCheckbox" name="deleteItems[]" value="' . $picRow['id'] . '"></td><td>' . $picRow['name'] . '</td></tr>';
+                                                    }
+                                                    ?>
+                                                </tbody>
+                                            </table>
+                                        </form>
+                                    </div>
+
+                                    <!-- Current Application Table -->
+                                    <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+                                        <form method="post">
+                                            <table class="table text-align-center table-responsive-xl table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th style="width: 5%;">
+                                                        </th>
+                                                        <th>Current Application</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <?php
+                                                    $appSql = "SELECT id, name FROM dropdown_items WHERE category = 'current_application'";
+                                                    $appQuery = mysqli_query($conn, $appSql);
+                                                    while ($appRow = mysqli_fetch_assoc($appQuery)) {
+                                                        echo '<tr><td><input type="checkbox" class="appCheckbox" name="deleteItems[]" value="' . $appRow['id'] . '"></td><td>' . $appRow['name'] . '</td></tr>';
+                                                    }
+                                                    ?>
+                                                </tbody>
+                                            </table>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -92,6 +151,24 @@ session_start();
             <?php include('../components/footer.php'); ?>
         </div>
     </div>
+
+    <!-- Your existing scripts and closing tags -->
+
+    <script>
+        function deleteItems() {
+            const confirmation = confirm('Are you sure you want to delete the selected items?');
+
+            if (confirmation) {
+                document.getElementById('deleteForm').submit();
+            }
+        }
+
+        function addItem() {
+            // Implement add item logic here
+            alert('Add item functionality to be implemented.');
+        }
+    </script>
+
 </body>
 
 </html>
