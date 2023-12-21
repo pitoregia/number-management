@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Dec 14, 2023 at 07:14 AM
+-- Generation Time: Dec 21, 2023 at 04:29 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.1.12
 
@@ -38,9 +38,9 @@ CREATE TABLE `dropdown_items` (
 --
 
 INSERT INTO `dropdown_items` (`id`, `category`, `name`) VALUES
-(1, 'device', 'Device 1'),
-(2, 'device', 'Device 2'),
-(3, 'device', 'Device 3'),
+(1, 'device', 'No Device'),
+(2, 'pic', 'None'),
+(3, 'current_application', 'None'),
 (4, 'pic', 'John'),
 (5, 'pic', 'Bob'),
 (6, 'pic', 'Alice'),
@@ -131,7 +131,7 @@ CREATE TABLE `tnumber` (
 --
 
 INSERT INTO `tnumber` (`id`, `nomor_telp`, `tanggal_aktif`, `tanggal_expired`, `status`, `wa_status`, `scanned`, `deskripsi`, `tanggal_simpan`, `device_id`, `pic_id`, `current_application_id`) VALUES
-(2, '0895155272238', '2023-12-01', '2023-12-31', 'HIDUP', 'AVAILABLE', 'SCANNED', 'Testing', '2023-12-14 04:25:40', 1, 4, 8);
+(2, '0895155272238', '2023-12-01', '2023-12-31', 'HIDUP', 'UNREGISTERED', 'NOT SCANNED', 'Testing', '2023-12-21 02:36:51', 1, 5, 9);
 
 -- --------------------------------------------------------
 
@@ -143,7 +143,6 @@ CREATE TABLE `user` (
   `id` int(11) NOT NULL,
   `username` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
-  `role` varchar(50) NOT NULL,
   `name` varchar(50) NOT NULL,
   `role_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -152,11 +151,11 @@ CREATE TABLE `user` (
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`id`, `username`, `password`, `role`, `name`, `role_id`) VALUES
-(1, 'admin', 'd41d8cd98f00b204e9800998ecf8427e', 'ADMIN', 'Admin', 1),
-(2, 'user', 'ee11cbb19052e40b07aac0ca060c23ee', 'USER', 'User', 2),
-(3, 'esa', '80ad0b9fa48a74fe86a9c8ee665d96bb', 'ADMIN', 'Mahesa Danuarta', 1),
-(4, 'joko', '9ba0009aa81e794e628a04b51eaf7d7f', 'USER', 'Raihan Revi', 2);
+INSERT INTO `user` (`id`, `username`, `password`, `name`, `role_id`) VALUES
+(1, 'admin', '21232f297a57a5a743894a0e4a801fc3', 'Admin', 1),
+(2, 'user', 'ee11cbb19052e40b07aac0ca060c23ee', 'User', 2),
+(3, 'esa', '80ad0b9fa48a74fe86a9c8ee665d96bb', 'Mahesa Danuarta', 1),
+(4, 'joko', '9ba0009aa81e794e628a04b51eaf7d7f', 'Raihan Revi', 2);
 
 --
 -- Indexes for dumped tables

@@ -3,7 +3,7 @@
 require_once('dbconnect.php');
 
 // Query to get the count of users
-$sql = "SELECT COUNT(*) as user_count FROM user WHERE role = 'user'";
+$sql = "SELECT COUNT(*) as user_count FROM user WHERE role_id = '2'";
 $result = mysqli_query($conn, $sql);
 
 // Fetch the result
@@ -11,7 +11,7 @@ $row = mysqli_fetch_assoc($result);
 $user_count = $row['user_count'];
 
 // Query to get the count of admins
-$sql = "SELECT COUNT(*) as admin_count FROM user WHERE role = 'admin'";
+$sql = "SELECT COUNT(*) as admin_count FROM user WHERE role_id = '1'";
 $result = mysqli_query($conn, $sql);
 
 // Fetch the result
@@ -25,4 +25,3 @@ $result = mysqli_query($conn, $sql);
 // Fetch the result
 $row = mysqli_fetch_assoc($result);
 $total_count = $row['total_count'];
-
