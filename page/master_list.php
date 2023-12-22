@@ -5,24 +5,42 @@ session_start();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['deleteItems']) && !empty($_POST['deleteItems'])) {
-        deleteItems($_POST['deleteItems']);
+        confirmDelete($_POST['deleteItems']);
+    } elseif (isset($_POST['confirmedDeleteItems']) && !empty($_POST['confirmedDeleteItems'])) {
+        deleteItems($_POST['confirmedDeleteItems']);
     }
+}
+
+function confirmDelete($itemIds) {
+    global $conn;
+
+    echo '<div class="alert alert-warning" role="alert">
+            Are you sure you want to delete the selected item(s)?
+            <form method="post">
+                <input type="hidden" name="confirmedDeleteItems" value="' . implode(',', $itemIds) . '">
+                <button type="submit" class="btn btn-danger">Yes</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="alert" aria-label="Close">No</button>
+            </form>
+          </div>';
 }
 
 function deleteItems($itemIds) {
     global $conn;
 
-    $safeItemIds = array_map('intval', $itemIds);
+    $safeItemIds = array_map('intval', explode(',', $itemIds));
     $deleteIds = implode(',', $safeItemIds);
     $sql = "DELETE FROM dropdown_items WHERE id IN ($deleteIds)";
 
     if (mysqli_query($conn, $sql)) {
-        echo '<script>alert("Items deleted successfully.");</script>';
+        echo '<div class="alert alert-success" role="alert">
+                Items deleted successfully.
+              </div>';
     } else {
-        echo '<script>alert("Error deleting items.");</script>';
+        echo '<div class="alert alert-danger" role="alert">
+                Error deleting items.
+              </div>';
     }
 }
-
 ?>
 
 <!DOCTYPE html>
@@ -35,6 +53,10 @@ function deleteItems($itemIds) {
         .table td,
         .table th {
             text-align: center;
+        }
+
+        .action-row {
+            height: 30px;
         }
     </style>
 </head>
@@ -79,18 +101,17 @@ function deleteItems($itemIds) {
                                                 </thead>
                                                 <tbody>
                                                     <?php
-                                                    $deviceSql = "SELECT id, name FROM dropdown_items WHERE category = 'device'";
+                                                    $deviceSql = "SELECT id, name, category FROM dropdown_items WHERE category = 'device'";
                                                     $deviceQuery = mysqli_query($conn, $deviceSql);
                                                     while ($deviceRow = mysqli_fetch_assoc($deviceQuery)) {
                                                         echo '<tr>
-                                                            <td>' . $deviceRow['name'] . '</td>
-                                                            <td>
-                                                                <form method="get">
-                                                                    <input type="hidden" name="deleteItems[]" value="' . $deviceRow['id'] . '">
-                                                                    <button type="submit" class="btn btn-danger">Delete</button>
-                                                                </form>
-                                                            </td>
-                                                        </tr>';
+                                                                <td>' . $deviceRow['name'] . '</td>
+                                                                <td class="action-row">';
+                                                        if ($deviceRow['category'] !== 'nav') {
+                                                            echo '<button type="button" class="btn btn-danger" onclick="confirmDelete(' . $deviceRow['id'] . ')">Delete</button>';
+                                                        }
+                                                        echo '</td>
+                                                            </tr>';
                                                     }
                                                     ?>
                                                 </tbody>
