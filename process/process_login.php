@@ -12,7 +12,6 @@ if (mysqli_num_rows($q1) != 0) {
     $r1 = mysqli_fetch_assoc($q1);
 
     $_SESSION['id'] = $r1['id'];
-    $_SESSION['role'] = $r1['role'];
     $_SESSION['name'] = $r1['name'];
 
     $role_id = $r1['role_id'];
@@ -30,7 +29,7 @@ if (mysqli_num_rows($q1) != 0) {
     if (empty($access)) {
         echo "<li>Access not found</li>";
     }
-
+    $_SESSION['role_name'] = $r2['role_name'];
     $_SESSION['admin_username'] = $username;
     $_SESSION['role_permission'] = $access;
     $_SESSION['role_id'] = $role_id;

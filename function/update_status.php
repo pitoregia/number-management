@@ -14,12 +14,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $stmt->close();
     }
     // ROLE UPDATE
-    elseif (isset($_POST['role'])) {
+    elseif (isset($_POST['role_id'])) {
         $id = $_POST['id'];
-        $role = $_POST['role'];
+        $role_id = $_POST['role_id'];
 
-        $stmt = $conn->prepare("UPDATE user SET role = ? WHERE id = ?");
-        $stmt->bind_param("si", $role, $id);
+        $stmt = $conn->prepare("UPDATE user SET role_id = ? WHERE id = ?");
+        $stmt->bind_param("ii", $role_id, $id);
         $stmt->execute();
         $stmt->close();
     }

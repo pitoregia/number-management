@@ -2,13 +2,13 @@
 // ROLE SELECTION
 $(document).ready(function () {
     $('.role-item').click(function () {
-        var role = $(this).text();
+        var role_id = $(this).data('role-id');
         var rowId = $(this).closest('tr').find('.row-id').text();
 
         $.ajax({
             type: 'POST',
             url: '../function/update_status.php',
-            data: { id: rowId, role: role },
+            data: { id: rowId, role_id: role_id },
             success: function () {
                 location.reload();
             }

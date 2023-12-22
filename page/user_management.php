@@ -159,17 +159,14 @@ if (isset($_GET['q_user'])) {
                                         while ($row = mysqli_fetch_array($query)) {
 
                                             $statusClass = '';
-                                            switch ($row['role']) {
-                                                case 'ADMIN':
+                                            switch ($row['role_id']) {
+                                                case '1': // admin
                                                     // $statusClass = 'bg-warning';
                                                     $statusClass = 'btn-warning';
                                                     break;
-                                                case 'USER':
+                                                case '2': // user
                                                     $statusClass = 'btn-success';
                                                     break;
-                                                    // Add more cases for other statuses if needed
-
-                                                    // Default case if none of the above conditions match
                                                 default:
                                                     $statusClass = 'btn-danger';
                                                     break;
@@ -180,12 +177,26 @@ if (isset($_GET['q_user'])) {
                                                 <td><?= $row['username'] ?></td>
                                                 <td class="row-id" style="display: none;"><?= $row['id'] ?></td> <!-- Hidden row ID -->
                                                 <td>
+                                                    <?php
+                                                    $roleSql = "SELECT role_id, role_name FROM role";
+                                                    $roleQuery = mysqli_query($conn, $roleSql);
+
+                                                    $role_id = $row['role_id'];
+                                                    $selectedRoleSql = "SELECT role_name FROM role WHERE role_id = '$role_id'";
+                                                    $selectedRoleQuery = mysqli_query($conn, $selectedRoleSql);
+                                                    $selectedRoleRow = mysqli_fetch_assoc($selectedRoleQuery);
+                                                    $selectedRoleName = $selectedRoleRow['role_name'];
+                                                    ?>
                                                     <button type="button" class="btn <?= $statusClass ?> dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                                        <?= $row['role'] ?>
+                                                        <?= $selectedRoleName ?>
                                                     </button>
                                                     <ul class="dropdown-menu">
-                                                        <li><a class="dropdown-item role-item" href="#">ADMIN</a></li>
-                                                        <li><a class="dropdown-item role-item" href="#">USER</a></li>
+                                                        <?php
+                                                        // Display device dropdown items
+                                                        while ($roleRow = mysqli_fetch_assoc($roleQuery)) {
+                                                            echo '<li><a class="dropdown-item role-item" data-role-id="' . $roleRow['role_id'] . '"href="#">' . $roleRow['role_name'] . '</a></li>';
+                                                        }
+                                                        ?>
                                                     </ul>
                                                 </td>
                                                 <td><?= $row['name'] ?></td>
