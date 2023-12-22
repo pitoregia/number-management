@@ -41,6 +41,10 @@ $(document).ready(function () {
         var device_id = $(this).data('device-id');
         var rowId = $(this).closest('tr').find('.row-id').text();
 
+        if (device_id === "") {
+            device_id = null;
+        }
+
         $.ajax({
             type: 'POST',
             url: '../function/update_status.php',
@@ -58,6 +62,10 @@ $(document).ready(function () {
         var pic_id = $(this).data('pic-id');
         var rowId = $(this).closest('tr').find('.row-id').text();
 
+        if (pic_id === "") {
+            pic_id = null;
+        }
+
         $.ajax({
             type: 'POST',
             url: '../function/update_status.php',
@@ -74,6 +82,10 @@ $(document).ready(function () {
     $('.current-application-item').click(function () {
         var current_application_id = $(this).data('current-application-id');
         var rowId = $(this).closest('tr').find('.row-id').text();
+
+        if (current_application_id === "") {
+            current_application_id = null;
+        }
 
         $.ajax({
             type: 'POST',

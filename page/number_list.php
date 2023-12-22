@@ -16,10 +16,13 @@ if (isset($_POST['bsave'])) {
     $description = $_POST['description'];
     // $status = $_POST['status'];
     $status = 'HIDUP';
+    $wa_status = 'UNREGISTERED';
+    $scanned = 'NOT SCANNED';
+
     $tanggal_aktif = $_POST['tanggal-aktif'];
     $tanggal_expired = $_POST['tanggal-expired'];
 
-    $query = mysqli_query($conn, "INSERT INTO tnumber (nomor_telp, status, tanggal_aktif, tanggal_expired, deskripsi) VALUES ('$number', '$status', '$tanggal_aktif', '$tanggal_expired', '$description')");
+    $query = mysqli_query($conn, "INSERT INTO tnumber (nomor_telp, status, tanggal_aktif, tanggal_expired, deskripsi, wa_status, scanned) VALUES ('$number', '$status', '$tanggal_aktif', '$tanggal_expired', '$description', '$wa_status','$scanned')");
 
     if ($query) {
         // echo "<script>alert('Data berhasil disimpan!');
@@ -233,7 +236,7 @@ if (isset($_GET['q'])) {
                                                 $selectedDeviceSql = "SELECT name FROM dropdown_items WHERE id = '$device_id'";
                                                 $selectedDeviceQuery = mysqli_query($conn, $selectedDeviceSql);
                                                 $selectedDeviceRow = mysqli_fetch_assoc($selectedDeviceQuery);
-                                                $selectedDeviceName = $selectedDeviceRow['name'];
+                                                $selectedDeviceName = ($device_id !== null) ? $selectedDeviceRow['name'] : "None";
                                                 ?>
 
                                                 <td>
@@ -241,10 +244,12 @@ if (isset($_GET['q'])) {
                                                         <?= $selectedDeviceName ?>
                                                     </button>
                                                     <ul class="dropdown-menu">
+                                                        <li><a class="dropdown-item device-item" data-device-id="" href="#">None</a></li>
                                                         <?php
-                                                        // Display device dropdown items
                                                         while ($deviceRow = mysqli_fetch_assoc($deviceQuery)) {
-                                                            echo '<li><a class="dropdown-item device-item" data-device-id="' . $deviceRow['id'] . '"href="#">' . $deviceRow['name'] . '</a></li>';
+                                                            $deviceId = $deviceRow['id'];
+                                                            $deviceName = ($deviceId !== null) ? $deviceRow['name'] : "None";
+                                                            echo '<li><a class="dropdown-item device-item" data-device-id="' . $deviceId . '"href="#">' . $deviceName . '</a></li>';
                                                         }
                                                         ?>
                                                     </ul>
@@ -267,27 +272,29 @@ if (isset($_GET['q'])) {
 
 
                                                 <?php
-                                                // Fetch device dropdown items
                                                 $picSql = "SELECT id, name FROM dropdown_items WHERE category = 'pic'";
                                                 $picQuery = mysqli_query($conn, $picSql);
 
-                                                // Fetch the selected pic name for the current row
                                                 $pic_id = $row['pic_id'];
                                                 $selectedPicSql = "SELECT name FROM dropdown_items WHERE id = '$pic_id'";
                                                 $selectedPicQuery = mysqli_query($conn, $selectedPicSql);
                                                 $selectedPicRow = mysqli_fetch_assoc($selectedPicQuery);
-                                                $selectedPicName = $selectedPicRow['name'];
+                                                $selectedPicName = ($pic_id !== null) ? $selectedPicRow['name'] : "None";
+
                                                 ?>
 
                                                 <td>
                                                     <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                                        <?= $selectedPicName ?>
+                                                        <?= ($pic_id !== null) ? $selectedPicName : "None" ?>
                                                     </button>
                                                     <ul class="dropdown-menu">
+                                                        <li><a class="dropdown-item pic-item" data-pic-id="" href="#">None</a></li>
                                                         <?php
                                                         // Display pic dropdown items
                                                         while ($picRow = mysqli_fetch_assoc($picQuery)) {
-                                                            echo '<li><a class="dropdown-item pic-item" data-pic-id="' . $picRow['id'] . '" href="#">' . $picRow['name'] . '</a></li>';
+                                                            $picId = $picRow['id'];
+                                                            $picName = ($picId !== null) ? $picRow['name'] : "None";
+                                                            echo '<li><a class="dropdown-item pic-item" data-pic-id="' . $picId . '" href="#">' . $picName . '</a></li>';
                                                         }
                                                         ?>
                                                     </ul>
@@ -315,7 +322,8 @@ if (isset($_GET['q'])) {
                                                 $selectedcurrentApplicationSql = "SELECT name FROM dropdown_items WHERE id = '$currentApplication_id'";
                                                 $selectedcurrentApplicationQuery = mysqli_query($conn, $selectedcurrentApplicationSql);
                                                 $selectedcurrentApplicationRow = mysqli_fetch_assoc($selectedcurrentApplicationQuery);
-                                                $selectedcurrentApplicationName = $selectedcurrentApplicationRow['name'];
+                                                $selectedcurrentApplicationName
+                                                    = ($currentApplication_id !== null) ? $selectedcurrentApplicationRow['name'] : "None";
                                                 ?>
 
                                                 <td>
@@ -323,10 +331,12 @@ if (isset($_GET['q'])) {
                                                         <?= $selectedcurrentApplicationName ?>
                                                     </button>
                                                     <ul class="dropdown-menu">
+                                                        <li><a class="dropdown-item current-application-item" data-current-application-id="" href="#">None</a></li>
                                                         <?php
-                                                        // Display currentApplication dropdown items
                                                         while ($currentApplicationRow = mysqli_fetch_assoc($currentApplicationQuery)) {
-                                                            echo '<li><a class="dropdown-item current-application-item" data-current-application-id="' . $currentApplicationRow['id'] . '" href="#">' . $currentApplicationRow['name'] . '</a></li>';
+                                                            $currentApplicationId = $currentApplicationRow['id'];
+                                                            $currentApplicationName = ($currentApplicationId !== null) ? $currentApplicationRow['name'] : "None";
+                                                            echo '<li><a class="dropdown-item current-application-item" data-current-application-id="' . $currentApplicationId . '" href="#">' . $currentApplicationName . '</a></li>';
                                                         }
                                                         ?>
                                                     </ul>

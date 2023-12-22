@@ -46,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // DEVICE UPDATE
     elseif (isset($_POST['device_id'])) {
         $id = $_POST['id'];
-        $deviceId = $_POST['device_id'];
+        $deviceId = ($_POST['device_id'] !== "") ? $_POST['device_id'] : null;
 
         $stmt = $conn->prepare("UPDATE tnumber SET device_id = ? WHERE id = ?");
         $stmt->bind_param("ii", $deviceId, $id);
@@ -56,7 +56,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // PIC UPDATE
     elseif (isset($_POST['pic_id'])) {
         $id = $_POST['id'];
-        $picId = $_POST['pic_id'];
+        $picId = ($_POST['pic_id'] !== "") ? $_POST['pic_id'] : null;
 
         $stmt = $conn->prepare("UPDATE tnumber SET pic_id = ? WHERE id = ?");
         $stmt->bind_param("ii", $picId, $id);
@@ -66,7 +66,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // current_application UPDATE
     elseif (isset($_POST['current_application_id'])) {
         $id = $_POST['id'];
-        $current_application_id = $_POST['current_application_id'];
+        $current_application_id = ($_POST['current_application_id'] !== "") ? $_POST['current_application_id'] : null;
 
         $stmt = $conn->prepare("UPDATE tnumber SET current_application_id = ? WHERE id = ?");
         $stmt->bind_param("ii", $current_application_id, $id);
