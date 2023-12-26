@@ -44,7 +44,7 @@ function isPageActive($page)
         <li class="nav-item <?php echo isPageActive('user_management.php') ? 'active' : ''; ?>">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
                 <i class="fas fa-fw fa-cog"></i>
-                <span>Management User</span>
+                <span>User Management</span>
             </a>
             <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
@@ -59,13 +59,28 @@ function isPageActive($page)
     <li class="nav-item <?php echo isPageActive('number_list.php') ? 'active' : ''; ?>">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
             <i class="fas fa-fw fa-wrench"></i>
-            <span>Service Management</span>
+            <span>Number Management</span>
         </a>
         <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Number Management</h6>
                 <a class="collapse-item" href="<?php echo BASE_URL ?>page/number_list.php">Number List</a>
                 <a class="collapse-item" href="<?php echo BASE_URL ?>page/master_list.php">Master List</a>
+            </div>
+        </div>
+    </li>
+
+        <!-- Nav Item - Utilities Collapse Menu -->
+        <li class="nav-item <?php echo isPageActive('telegram_master.php') ? 'active' : ''; ?>">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
+            <i class=" fa-2x fa-brands fa-telegram"></i>
+            <span>Telegram Management</span>
+        </a>
+        <div id="collapsePages" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">Telegram Management</h6>
+                <a class="collapse-item" href="<?php echo BASE_URL ?>page/telegram_master.php">Telegram Manage</a>
+                <!-- <a class="collapse-item" href="<?php echo BASE_URL ?>page/master_list.php">Master List</a> -->
             </div>
         </div>
     </li>
