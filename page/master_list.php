@@ -119,7 +119,63 @@ function deleteItems($itemIds) {
                                         </form>
                                     </div>
 
-                                    <!-- ... (similar changes for other tables) ... -->
+                                    <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                                        <form method="post">
+                                            <table class="table text-align-center table-responsive-xl table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th>PIC</th>
+                                                        <th>Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <?php
+                                                    $picSql = "SELECT id, name, category FROM dropdown_items WHERE category = 'pic'";
+                                                    $picQuery = mysqli_query($conn, $picSql);
+                                                    while ($picRow = mysqli_fetch_assoc($picQuery)) {
+                                                        echo '<tr>
+                                                                <td>' . $picRow['name'] . '</td>
+                                                                <td class="action-row">';
+                                                        if ($picRow['category'] !== 'nav') {
+                                                            echo '<button type="button" class="btn btn-danger" onclick="confirmDelete(' . $picRow['id'] . ')">Delete</button>';
+                                                        }
+                                                        echo '</td>
+                                                            </tr>';
+                                                    }
+                                                    ?>
+                                                </tbody>
+                                            </table>
+                                        </form>
+                                    </div>
+
+                                    <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+                                        <form method="post">
+                                            <table class="table text-align-center table-responsive-xl table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Current Application</th>
+                                                        <th>Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <?php
+                                                    $appSql = "SELECT id, name, category FROM dropdown_items WHERE category = 'current_application'";
+                                                    $appQuery = mysqli_query($conn, $appSql);
+                                                    while ($appRow = mysqli_fetch_assoc($appQuery)) {
+                                                        echo '<tr>
+                                                                <td>' . $appRow['name'] . '</td>
+                                                                <td class="action-row">';
+                                                        if ($appRow['category'] !== 'nav') {
+                                                            echo '<button type="button" class="btn btn-danger" onclick="confirmDelete(' . $appRow['id'] . ')">Delete</button>';
+                                                        }
+                                                        echo '</td>
+                                                            </tr>';
+                                                    }
+                                                    ?>
+                                                </tbody>
+                                            </table>
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
                         </div>
