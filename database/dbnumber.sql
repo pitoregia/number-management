@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1:3306
--- Generation Time: Dec 14, 2023 at 07:14 AM
--- Server version: 10.4.27-MariaDB
--- PHP Version: 8.1.12
+-- Host: 127.0.0.1
+-- Waktu pembuatan: 26 Des 2023 pada 07.57
+-- Versi server: 10.4.28-MariaDB
+-- Versi PHP: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -29,6 +29,7 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `bot_token` (
   `bot_id` int(11) NOT NULL,
+  `bot_name` varchar(50) NOT NULL,
   `telegram_bot_token` varchar(50) NOT NULL,
   `group_chat_id` varchar(50) NOT NULL,
   `message` varchar(250) NOT NULL
@@ -38,9 +39,9 @@ CREATE TABLE `bot_token` (
 -- Dumping data untuk tabel `bot_token`
 --
 
-INSERT INTO `bot_token` (`bot_id`, `telegram_bot_token`, `group_chat_id`, `message`) VALUES
-(1, '6693643442:AAHnF3Q7_pfoUN5pT4NXxkrFcOjKWbKvJFQ', '@testing5421', 'Testing'),
-(2, '6883561327:AAEA_nAK0C2HQFry8VTwyeA5TeassFhi8Rk', '@test54422', 'testing 2');
+INSERT INTO `bot_token` (`bot_id`, `bot_name`, `telegram_bot_token`, `group_chat_id`, `message`) VALUES
+(1, 'Test5421_bot', '6693643442:AAHnF3Q7_pfoUN5pT4NXxkrFcOjKWbKvJFQ', '@testing5421', 'Testing'),
+(2, 'test5422_bot', '6883561327:AAEA_nAK0C2HQFry8VTwyeA5TeassFhi8Rk', '@test54422', 'testing 2');
 
 -- --------------------------------------------------------
 
@@ -59,9 +60,9 @@ CREATE TABLE `dropdown_items` (
 --
 
 INSERT INTO `dropdown_items` (`id`, `category`, `name`) VALUES
-(1, 'device', 'No Device'),
-(2, 'pic', 'None'),
-(3, 'current_application', 'None'),
+(1, 'device', 'Device 1'),
+(2, 'device', 'Device 2'),
+(3, 'device', 'Device 3'),
 (4, 'pic', 'John'),
 (5, 'pic', 'Bob'),
 (6, 'pic', 'Alice'),
@@ -152,7 +153,8 @@ CREATE TABLE `tnumber` (
 --
 
 INSERT INTO `tnumber` (`id`, `nomor_telp`, `tanggal_aktif`, `tanggal_expired`, `status`, `wa_status`, `scanned`, `deskripsi`, `tanggal_simpan`, `device_id`, `pic_id`, `current_application_id`) VALUES
-(2, '0895155272238', '2023-12-01', '2023-12-31', 'HIDUP', 'AVAILABLE', 'SCANNED', 'Testing', '2023-12-14 04:25:40', 1, 4, 8);
+(2, '0895155272238', '2023-12-01', '2023-12-31', 'TENGGANG', 'AVAILABLE', 'SCANNED', 'Testing', '2023-12-22 09:21:23', NULL, 4, 7),
+(4, '0861752540', '2023-12-27', '2023-12-01', 'MATI', 'UNREGISTERED', 'NOT SCANNED', 'testing', '2023-12-22 09:21:27', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -164,6 +166,7 @@ CREATE TABLE `user` (
   `id` int(11) NOT NULL,
   `username` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
+  `role` varchar(50) NOT NULL,
   `name` varchar(50) NOT NULL,
   `role_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -172,11 +175,11 @@ CREATE TABLE `user` (
 -- Dumping data untuk tabel `user`
 --
 
-INSERT INTO `user` (`id`, `username`, `password`, `name`, `role_id`) VALUES
-(1, 'admin', '21232f297a57a5a743894a0e4a801fc3', 'Admin', 1),
-(2, 'user', 'ee11cbb19052e40b07aac0ca060c23ee', 'User', 2),
-(3, 'esa', '80ad0b9fa48a74fe86a9c8ee665d96bb', 'Mahesa Danuarta', 1),
-(4, 'joko', '9ba0009aa81e794e628a04b51eaf7d7f', 'Raihan Revi', 2);
+INSERT INTO `user` (`id`, `username`, `password`, `role`, `name`, `role_id`) VALUES
+(1, 'admin', 'd41d8cd98f00b204e9800998ecf8427e', 'ADMIN', 'Admin', 1),
+(2, 'user', 'ee11cbb19052e40b07aac0ca060c23ee', 'USER', 'User', 2),
+(3, 'esa', '80ad0b9fa48a74fe86a9c8ee665d96bb', 'ADMIN', 'Mahesa Danuarta', 1),
+(4, 'joko', '9ba0009aa81e794e628a04b51eaf7d7f', 'USER', 'Raihan Revi', 2);
 
 --
 -- Indexes for dumped tables
@@ -237,7 +240,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT untuk tabel `bot_token`
 --
 ALTER TABLE `bot_token`
-  MODIFY `bot_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `bot_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT untuk tabel `dropdown_items`
@@ -249,7 +252,7 @@ ALTER TABLE `dropdown_items`
 -- AUTO_INCREMENT untuk tabel `tnumber`
 --
 ALTER TABLE `tnumber`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT untuk tabel `user`
