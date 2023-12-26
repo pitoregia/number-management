@@ -11,7 +11,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-function confirmDelete($itemIds) {
+function confirmDelete($itemIds)
+{
     global $conn;
 
     echo '<div class="alert alert-warning" role="alert">
@@ -24,7 +25,8 @@ function confirmDelete($itemIds) {
           </div>';
 }
 
-function deleteItems($itemIds) {
+function deleteItems($itemIds)
+{
     global $conn;
 
     $safeItemIds = array_map('intval', explode(',', $itemIds));
@@ -41,6 +43,37 @@ function deleteItems($itemIds) {
               </div>';
     }
 }
+
+if (isset($_POST['bsave'])) {
+    if (isset($_POST['device'])) {
+        $device_name = $_POST['device'];
+        // $description = $_POST['description'];
+        $category = 'device';
+
+        $query = mysqli_query($conn, "INSERT INTO dropdown_items (name, category) VALUES ('$device_name', '$category')");
+    } elseif (isset($_POST['pic'])) {
+        $pic_name = $_POST['pic'];
+        // $description = $_POST['description'];
+        $category = 'pic';
+
+        $query = mysqli_query($conn, "INSERT INTO dropdown_items (name, category) VALUES ('$pic_name', '$category')");
+    } elseif (isset($_POST['application'])) {
+        $application_name = $_POST['application'];
+        // $description = $_POST['description'];
+        $category = 'current_application';
+
+        $query = mysqli_query($conn, "INSERT INTO dropdown_items (name, category) VALUES ('$application_name', '$category')");
+    }
+
+    if ($query) {
+        header("Location: " . BASE_URL . "page/master_list.php");
+    } else {
+        echo "<script>alert('Data gagal disimpan!')
+                document.location='master_list.php';
+                </script>";
+    }
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -84,13 +117,64 @@ function deleteItems($itemIds) {
                                     <li class="nav-item mx-1">
                                         <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">Current Application</button>
                                     </li>
-                                    <button class="btn btn-success" onclick="addItem()">Add <i class="fas fa-plus"></i></button>
+                                    <!-- <button class="btn btn-success" onclick="addItem()">Add <i class="fas fa-plus"></i></button> -->
                                 </ul>
                             </div>
                             <div class="card-body">
                                 <div class="tab-content" id="nav-tabContent">
                                     <!-- Device Table -->
                                     <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                                        <div class="container">
+                                            <div class="row justify-content-between">
+                                                <div class="col">
+                                                    <form method="POST">
+                                                        <div class="input-group mb-3">
+                                                            <input type="text" name="tsearch" class="form-control" placeholder="Search" />
+                                                            <button class="btn btn-primary" name="bsearch" type="submit">
+                                                                <i class="fa-solid fa-magnifying-glass"></i>
+                                                            </button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                                <?php if (in_array("edit_number", $_SESSION['role_permission'])) { ?>
+                                                    <div class="col-auto">
+                                                        <button type=" button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addDeviceModal">
+                                                            <i class="fa-solid fa-plus"></i>
+                                                        </button>
+                                                    </div>
+                                                <?php } ?>
+                                            </div>
+                                        </div>
+
+                                        <!-- Modal -->
+                                        <div class="modal fade" id="addDeviceModal" tabindex="-1" aria-labelledby="addDeviceModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+
+                                                    <div class="modal-header">
+                                                        <h1 class="modal-title fs-5" id="addDeviceModalLabel">Add new device</h1>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <form action="" method="POST">
+                                                        <div class="modal-body">
+                                                            <div class="mb-3">
+                                                                <label class="form-label">Device Name</label>
+                                                                <input type="text" name="device" value="" class="form-control" required />
+                                                            </div>
+                                                            <!-- <div class="mb-3">
+                                                        <label class="form-label">Description</label>
+                                                        <input type="text" name="description" value="" class="form-control" required />
+                                                    </div> -->
+                                                        </div>
+
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                            <button class="btn btn-primary" name="bsave" type="submit">Save changes</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
                                         <form method="post">
                                             <table class="table text-align-center table-responsive-xl table-bordered">
                                                 <thead>
@@ -120,6 +204,53 @@ function deleteItems($itemIds) {
                                     </div>
 
                                     <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                                        <div class="container">
+                                            <div class="row justify-content-between">
+                                                <div class="col">
+                                                    <form method="POST">
+                                                        <div class="input-group mb-3">
+                                                            <input type="text" name="tsearch" class="form-control" placeholder="Search" />
+                                                            <button class="btn btn-primary" name="bsearch" type="submit">
+                                                                <i class="fa-solid fa-magnifying-glass"></i>
+                                                            </button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                                <?php if (in_array("edit_number", $_SESSION['role_permission'])) { ?>
+                                                    <div class="col-auto">
+                                                        <button type=" button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addPicModal">
+                                                            <i class="fa-solid fa-plus"></i>
+                                                        </button>
+                                                    </div>
+                                                <?php } ?>
+                                            </div>
+                                        </div>
+
+                                        <!-- Modal -->
+                                        <div class="modal fade" id="addPicModal" tabindex="-1" aria-labelledby="addPicModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+
+                                                    <div class="modal-header">
+                                                        <h1 class="modal-title fs-5" id="addPicModalLabel">Add new PIC</h1>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <form action="" method="POST">
+                                                        <div class="modal-body">
+                                                            <div class="mb-3">
+                                                                <label class="form-label">PIC Name</label>
+                                                                <input type="text" name="pic" value="" class="form-control" required />
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                            <button class="btn btn-primary" name="bsave" type="submit">Save changes</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
                                         <form method="post">
                                             <table class="table text-align-center table-responsive-xl table-bordered">
                                                 <thead>
@@ -148,7 +279,59 @@ function deleteItems($itemIds) {
                                         </form>
                                     </div>
 
+
                                     <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+                                        <div class="container">
+                                            <div class="row justify-content-between">
+                                                <div class="col">
+                                                    <form method="POST">
+                                                        <div class="input-group mb-3">
+                                                            <input type="text" name="tsearch" class="form-control" placeholder="Search" />
+                                                            <button class="btn btn-primary" name="bsearch" type="submit">
+                                                                <i class="fa-solid fa-magnifying-glass"></i>
+                                                            </button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                                <?php if (in_array("edit_number", $_SESSION['role_permission'])) { ?>
+                                                    <div class="col-auto">
+                                                        <button type=" button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addApplicationModal">
+                                                            <i class="fa-solid fa-plus"></i>
+                                                        </button>
+                                                    </div>
+                                                <?php } ?>
+                                            </div>
+                                        </div>
+
+                                        <!-- Modal -->
+                                        <div class="modal fade" id="addApplicationModal" tabindex="-1" aria-labelledby="addApplicationModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+
+                                                    <div class="modal-header">
+                                                        <h1 class="modal-title fs-5" id="addApplicationModalLabel">Add new Application</h1>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <form action="" method="POST">
+                                                        <div class="modal-body">
+                                                            <div class="mb-3">
+                                                                <label class="form-label">Application Name</label>
+                                                                <input type="text" name="application" value="" class="form-control" required />
+                                                            </div>
+                                                            <!-- <div class="mb-3">
+                                                        <label class="form-label">Description</label>
+                                                        <input type="text" name="description" value="" class="form-control" required />
+                                                    </div> -->
+                                                        </div>
+
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                            <button class="btn btn-primary" name="bsave" type="submit">Save changes</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
                                         <form method="post">
                                             <table class="table text-align-center table-responsive-xl table-bordered">
                                                 <thead>
