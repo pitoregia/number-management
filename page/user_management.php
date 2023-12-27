@@ -17,11 +17,12 @@ if ($_SESSION['role_id'] == null) {
 // Handle user data insertion
 if (isset($_POST['bsave_user'])) {
     $username = $_POST['username'];
-    $role = 'USER';
+    $role_id = 2;
     $password = md5($_POST['password']);
     $name = $_POST['name'];
 
-    $query = mysqli_query($conn, "INSERT INTO user (username, role, password, name) VALUES ('$username', '$role', '$password','$name')");
+    // $query = mysqli_query($conn, "INSERT INTO user (username, role, password, name) VALUES ('$username', '$role', '$password','$name')");
+    $query = mysqli_query($conn, "INSERT INTO user (username, role_id, password, name) VALUES ('$username', '$role_id', '$password','$name')");
 
     if ($query) {
         echo "<script>alert('User data saved successfully!');
