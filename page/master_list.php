@@ -74,6 +74,19 @@ if (isset($_POST['bsave'])) {
     }
 }
 
+if (isset($_GET['q'])) {
+    if ($_GET['q'] == 'delete') {
+        $query = mysqli_query($conn, "DELETE FROM dropdown_items WHERE id = '$_GET[id]'");
+        if ($query) {
+            header("Location: " . BASE_URL . "page/master_list.php");
+        } else {
+            echo "<script>alert('Data gagal dihapus!')
+            document.location='master_list.php';
+            </script>";
+        }
+    }
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -349,7 +362,7 @@ if (isset($_POST['bsave'])) {
                                                                 <td>' . $appRow['name'] . '</td>
                                                                 <td class="action-row">';
                                                         if ($appRow['category'] !== 'nav') {
-                                                            echo '<button type="button" class="btn btn-danger" onclick="confirmDelete(' . $appRow['id'] . ')">Delete</button>';
+                                                            echo '<a href="master_list.php?q=delete&id=' . $appRow['id'] . '" name="bdelete" class="btn btn-danger""><i class="fa-solid fa-trash"></i></a>';
                                                         }
                                                         echo '</td>
                                                             </tr>';
